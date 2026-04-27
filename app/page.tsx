@@ -102,7 +102,7 @@ function Nav() {
         style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--bg)', background: 'var(--accent)', padding: '7px 16px', borderRadius: 100, textDecoration: 'none', transition: 'opacity 0.15s' }}
         onMouseEnter={e => ((e.currentTarget as HTMLElement).style.opacity = '0.85')}
         onMouseLeave={e => ((e.currentTarget as HTMLElement).style.opacity = '1')}
-      >Open to work</a>
+      >Get in touch</a>
     </nav>
   )
 }
@@ -185,7 +185,7 @@ export default function Home() {
               <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--green)', boxShadow: '0 0 8px var(--green)', flexShrink: 0 }} />
               <span className="label" style={{ color: 'var(--text-muted)' }}>Now</span>
               <span style={{ fontFamily: 'var(--font-body)', fontStyle: 'italic', fontSize: 13, color: 'var(--text-mid)' }}>
-                Building Relay — Live at myrelay.space · Open to EA roles · Raipur → wherever the work is
+                Building Relay — Live at myrelay.space · Raipur → wherever the work is
               </span>
             </div>
           </Reveal>
