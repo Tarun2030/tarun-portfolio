@@ -1,26 +1,126 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:           #080808;
+  --surface:      #101010;
+  --elevated:     #141414;
+  --border:       #1E1E1E;
+  --border-hi:    #2A2A2A;
+  --text:         #E8E8E8;
+  --muted:        #505050;
+  --dim:          #2E2E2E;
+  --accent:       #00E5A0;
+  --accent-dim:   rgba(0, 229, 160, 0.08);
+  --accent-mid:   rgba(0, 229, 160, 0.18);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body), sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.font-mono { font-family: var(--font-mono), monospace !important; }
+
+/* Glass card */
+.glass {
+  background: rgba(20, 20, 20, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.glass:hover {
+  border-color: var(--accent-mid);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Accent border on hover */
+.card-accent {
+  border-left: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+.card-accent:hover { border-left-color: var(--accent); }
+
+/* Badge */
+.badge {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 2px;
+  border: 1px solid var(--accent-mid);
+  background: var(--accent-dim);
+  color: var(--accent);
+  display: inline-block;
+}
+
+/* Fade-up animation */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
+}
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+.delay-6 { animation-delay: 0.6s; }
+
+/* Section divider */
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--dim); border-radius: 3px; }
+
+@media (max-width: 767px) {
+  .portfolio-hero-grid,
+  .portfolio-about-grid,
+  .portfolio-project-grid,
+  .portfolio-writing-card {
+    grid-template-columns: 1fr !important;
+  }
+
+  .portfolio-section-heading {
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .portfolio-section-heading p {
+    max-width: none !important;
+    text-align: left !important;
+  }
+
+  .desktop-nav {
+    display: none !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (min-width: 768px) {
+  .mobile-menu-button {
+    display: none !important;
+  }
 }
