@@ -90,9 +90,9 @@ function Nav() {
       <a href="#hero" style={{ fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 800, color: 'var(--text)', textDecoration: 'none', letterSpacing: '-0.02em', marginRight: 8 }}>
         TS
       </a>
-      <span style={{ width: 1, height: 20, background: 'var(--glass-border-hi)', display: 'inline-block' }} />
+      <span className="nav-divider" style={{ width: 1, height: 20, background: 'var(--glass-border-hi)', display: 'inline-block' }} />
       {['Writing', 'Work', 'About'].map(l => (
-        <a key={l} href={`#${l.toLowerCase()}`}
+        <a key={l} href={`#${l.toLowerCase()}`} className="nav-links"
           style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 500, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.15s' }}
           onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = 'var(--text)')}
           onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'var(--text-muted)')}
@@ -120,13 +120,13 @@ export default function Home() {
 
       <Nav />
 
-      <main style={{ position: 'relative', zIndex: 1, maxWidth: 860, margin: '0 auto', padding: '0 var(--space-6)' }}>
+      <main className="main-wrap" style={{ position: 'relative', zIndex: 1, maxWidth: 860, margin: '0 auto', padding: '0 var(--space-6)' }}>
 
         {/* ── Hero ── */}
         <section id="hero" style={{ paddingTop: 'calc(var(--space-10) + 48px)', paddingBottom: 'var(--space-9)', position: 'relative' }}>
 
           {/* Photo — right side, bleeds into bg */}
-          <div style={{
+          <div className="hero-photo" style={{
             position: 'absolute',
             top: 'calc(var(--space-10) + 20px)',
             right: '-40px',
@@ -285,7 +285,7 @@ export default function Home() {
           <Reveal>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px,4vw,42px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 'var(--space-6)' }}>Experience</h2>
           </Reveal>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14, alignItems: 'stretch' }}>
+          <div className="exp-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14, alignItems: 'stretch' }}>
             {[
               { role: 'Executive Assistant', org: 'Shivalik Engineering Industries Ltd', period: '2024 – Present', note: 'Manufacturing & export. Calendar, execution, nothing slips.' },
               { role: 'Operations Head', org: 'Inseive Overseas', period: '2022 – 2024', note: 'Freelance. Built the ops layer from scratch — process, vendor, team.' },
@@ -308,7 +308,7 @@ export default function Home() {
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px,4vw,42px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 'var(--space-6)' }}>About</h2>
           </Reveal>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 180px', gap: 'var(--space-7)', alignItems: 'start' }}>
+          <div className="about-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 180px', gap: 'var(--space-7)', alignItems: 'start' }}>
             <Reveal>
               <p style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 16, color: 'var(--text-mid)', lineHeight: 1.85, marginBottom: 'var(--space-4)', maxWidth: '50ch' }}>
                 I&apos;m an EA at a manufacturing and export company in Raipur. The job is precise by necessity — if something&apos;s unclear, it costs someone time or money. Four years of that teaches you to think in systems before you reach for tools.
@@ -317,8 +317,8 @@ export default function Home() {
                 I&apos;m not a trained engineer. I build what I need and learn what I don&apos;t know. Mostly at night. Mostly alone. Everything here started as a real problem I ran into at work.
               </p>
             </Reveal>
-            <Reveal delay={80}>
-              <div className="glass-card" style={{ padding: 'var(--space-4)' }}>
+            <Reveal delay={80} style={{}} >
+              <div className="glass-card about-sidebar" style={{ padding: 'var(--space-4)' }}>
                 {[
                   ['Role',  'EA + Solo Builder'],
                   ['Stack', 'Next.js / Supabase'],
@@ -334,7 +334,7 @@ export default function Home() {
           </div>
 
           <Reveal delay={100} style={{ marginTop: 'var(--space-6)' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+            <div className="cap-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
               {[
                 { label: 'Operations', body: "Making things run smoothly for people who can't afford rough edges. That's the whole job." },
                 { label: 'Building',   body: 'Small, useful software built from real operational friction — not hypothetical user stories.' },
