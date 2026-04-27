@@ -226,10 +226,10 @@ export default function Home() {
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px,4vw,42px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 'var(--space-6)' }}>Work</h2>
           </Reveal>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 14 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 14, alignItems: 'stretch' }}>
             {PROJECTS.map((p, i) => (
-              <Reveal key={p.name} delay={i * 80}>
-                <a href={p.href} className="glass-card" style={{ display: 'flex', flexDirection: 'column', padding: 'var(--space-5)', textDecoration: 'none', minHeight: 200 }}>
+              <Reveal key={p.name} delay={i * 80} style={{ display: 'flex' }}>
+                <a href={p.href} className="glass-card" style={{ display: 'flex', flexDirection: 'column', padding: 'var(--space-5)', textDecoration: 'none', flex: 1 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
                     <div>
                       <div style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.025em', marginBottom: 3 }}>{p.name}</div>
@@ -254,20 +254,21 @@ export default function Home() {
           <Reveal>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px,4vw,42px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 'var(--space-6)' }}>Experience</h2>
           </Reveal>
-          {[
-            { role: 'Executive Assistant', org: 'Shivalik Engineering Industries Ltd', period: '2024 – Present' },
-            { role: 'Operations Head (Freelance)', org: 'Inseive Overseas', period: '2022 – 2024' },
-          ].map((e, i) => (
-            <Reveal key={e.org} delay={i * 70}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'baseline', padding: 'var(--space-5) 0', borderBottom: '1px solid var(--glass-border)' }}>
-                <div>
-                  <div style={{ fontFamily: 'var(--font-display)', fontSize: 17, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1.2, marginBottom: 4 }}>{e.role}</div>
-                  <div style={{ fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--text-muted)' }}>{e.org}</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14, alignItems: 'stretch' }}>
+            {[
+              { role: 'Executive Assistant', org: 'Shivalik Engineering Industries Ltd', period: '2024 – Present', note: 'Manufacturing & export. Calendar, execution, nothing slips.' },
+              { role: 'Operations Head', org: 'Inseive Overseas', period: '2022 – 2024', note: 'Freelance. Built the ops layer from scratch — process, vendor, team.' },
+            ].map((e, i) => (
+              <Reveal key={e.org} delay={i * 70} style={{ display: 'flex' }}>
+                <div className="glass-card" style={{ flex: 1, padding: 'var(--space-5)', display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.06em' }}>{e.period}</div>
+                  <div style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1.15 }}>{e.role}</div>
+                  <div style={{ fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--accent)', fontWeight: 500 }}>{e.org}</div>
+                  <p style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.65, marginTop: 'auto' }}>{e.note}</p>
                 </div>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.06em' }}>{e.period}</span>
-              </div>
-            </Reveal>
-          ))}
+              </Reveal>
+            ))}
+          </div>
         </section>
 
         {/* ── About ── */}
@@ -288,10 +289,9 @@ export default function Home() {
             <Reveal delay={80}>
               <div className="glass-card" style={{ padding: 'var(--space-4)' }}>
                 {[
-                  ['Role',   'EA + Solo Builder'],
-                  ['Stack',  'Next.js / Supabase'],
-                  ['Based',  'Raipur, C.G.'],
-                  ['Status', 'Open to EA roles'],
+                  ['Role',  'EA + Solo Builder'],
+                  ['Stack', 'Next.js / Supabase'],
+                  ['Based', 'Raipur, C.G.'],
                 ].map(([k, v], i, arr) => (
                   <div key={k} style={{ paddingBottom: i < arr.length - 1 ? 'var(--space-3)' : 0, marginBottom: i < arr.length - 1 ? 'var(--space-3)' : 0, borderBottom: i < arr.length - 1 ? '1px solid var(--glass-border)' : 'none' }}>
                     <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 3 }}>{k}</div>
@@ -324,18 +324,26 @@ export default function Home() {
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px,4vw,42px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 'var(--space-6)' }}>Tools</h2>
           </Reveal>
           <Reveal delay={60}>
-            <div style={{ marginBottom: 'var(--space-4)' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 10 }}>Hard Skills</div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                {HARD_SKILLS.map(t => <span key={t} className="tool-pill">{t}</span>)}
+            <div style={{ marginBottom: 12 }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 12 }}>Hard Skills</div>
+              <div className="marquee-overflow">
+                <div className="marquee-track">
+                  {[...HARD_SKILLS, ...HARD_SKILLS].map((t, i) => (
+                    <span key={i} className="tool-pill" style={{ marginRight: 8, flexShrink: 0 }}>{t}</span>
+                  ))}
+                </div>
               </div>
             </div>
           </Reveal>
           <Reveal delay={120}>
             <div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 10 }}>Soft Skills</div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                {SOFT_SKILLS.map(t => <span key={t} className="tool-pill">{t}</span>)}
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 12 }}>Soft Skills</div>
+              <div className="marquee-overflow">
+                <div className="marquee-track-rev">
+                  {[...SOFT_SKILLS, ...SOFT_SKILLS].map((t, i) => (
+                    <span key={i} className="tool-pill" style={{ marginRight: 8, flexShrink: 0 }}>{t}</span>
+                  ))}
+                </div>
               </div>
             </div>
           </Reveal>
