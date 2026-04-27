@@ -2,6 +2,31 @@
 
 import { useEffect, useRef } from 'react'
 
+// ── 3D tilt on mouse move ─────────────────────────────────────────────────────
+function useTilt(strength = 12) {
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const onMove = (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect()
+      const x = (e.clientX - rect.left) / rect.width  - 0.5
+      const y = (e.clientY - rect.top)  / rect.height - 0.5
+      el.style.transform = `perspective(800px) rotateY(${x * strength}deg) rotateX(${-y * strength}deg) translateZ(8px)`
+    }
+    const onLeave = () => {
+      el.style.transform = 'perspective(800px) rotateY(0deg) rotateX(0deg) translateZ(0px)'
+    }
+    el.addEventListener('mousemove', onMove)
+    el.addEventListener('mouseleave', onLeave)
+    return () => {
+      el.removeEventListener('mousemove', onMove)
+      el.removeEventListener('mouseleave', onLeave)
+    }
+  }, [strength])
+  return ref
+}
+
 // ── Reveal ────────────────────────────────────────────────────────────────────
 function Reveal({
   children,
@@ -33,13 +58,13 @@ function Reveal({
 // ── Data ──────────────────────────────────────────────────────────────────────
 const POSTS = [
   {
-    date: 'Apr '26',
+    date: "Apr '26",
     title: 'How I open an AI build session without losing the plot',
     excerpt: 'A compact ritual for turning messy intent into a clear first commit — constraints visible from the start.',
     href: '#',
   },
   {
-    date: 'Mar '26',
+    date: "Mar '26",
     title: 'Executive support is product thinking in a quieter room',
     excerpt: 'On prioritisation, sharp communication, and why good assistants think in systems before software.',
     href: '#',
@@ -110,6 +135,8 @@ function Nav() {
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 export default function Home() {
+  const heroTilt = useTilt(6)
+
   return (
     <>
       <Nav />
@@ -124,18 +151,28 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={60}>
-            <h1 style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(56px, 9vw, 104px)',
-              fontWeight: 900,
-              color: 'var(--text)',
-              lineHeight: 0.95,
-              letterSpacing: '-0.035em',
-              marginBottom: 'var(--space-7)',
-              maxWidth: '10ch',
-            }}>
-              The EA who ships code.
-            </h1>
+            {/* 3D tilt wrapper — perspective comes from useTilt */}
+            <div
+              ref={heroTilt}
+              style={{
+                display: 'inline-block',
+                transition: 'transform 0.18s cubic-bezier(0.16,1,0.3,1)',
+                willChange: 'transform',
+                marginBottom: 'var(--space-7)',
+              }}
+            >
+              <h1 style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: 'clamp(56px, 9vw, 104px)',
+                fontWeight: 900,
+                color: 'var(--text)',
+                lineHeight: 0.95,
+                letterSpacing: '-0.035em',
+                maxWidth: '10ch',
+              }}>
+                The EA who ships code.
+              </h1>
+            </div>
           </Reveal>
 
           <Reveal delay={120}>
@@ -291,7 +328,7 @@ export default function Home() {
                 { label: 'Build',   body: 'Next.js interfaces, Supabase backends, Claude-powered workflows.' },
                 { label: 'Systems', body: 'Audit prompts, repeatable checklists, structured processes.' },
               ].map(c => (
-                <div key={c.label} style={{ borderTop: '2px solid var(--border-hi)', paddingTop: 'var(--space-4)' }}>
+                <div key={c.label} className="cap-col">
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 8 }}>{c.label}</div>
                   <p style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.7 }}>{c.body}</p>
                 </div>

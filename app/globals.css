@@ -93,7 +93,7 @@ body {
   padding: var(--space-5) 0;
   border-bottom: 1px solid var(--border);
   text-decoration: none;
-  transition: background 0.18s ease;
+  transition: background 0.18s ease, transform 0.22s cubic-bezier(0.16,1,0.3,1), box-shadow 0.22s ease;
   cursor: pointer;
 }
 .post-row:first-of-type {
@@ -106,6 +106,8 @@ body {
   border-radius: 6px;
   border-top-color: transparent;
   border-bottom-color: transparent;
+  transform: perspective(600px) rotateX(-1deg) translateY(-2px);
+  box-shadow: 0 6px 24px -6px oklch(68% 0.110 55 / 0.10);
 }
 .post-row:hover + .post-row {
   border-top-color: transparent;
@@ -120,7 +122,8 @@ body {
   padding: var(--space-5) 0;
   border-bottom: 1px solid var(--border);
   text-decoration: none;
-  transition: background 0.18s ease;
+  transition: background 0.18s ease, transform 0.22s cubic-bezier(0.16,1,0.3,1), box-shadow 0.22s ease;
+  transform-style: preserve-3d;
 }
 .project-entry:first-of-type {
   border-top: 1px solid var(--border);
@@ -132,6 +135,8 @@ body {
   border-radius: 6px;
   border-top-color: transparent;
   border-bottom-color: transparent;
+  transform: perspective(600px) rotateX(-1.5deg) translateY(-2px);
+  box-shadow: 0 8px 32px -8px oklch(68% 0.110 55 / 0.12);
 }
 .project-entry:hover + .project-entry {
   border-top-color: transparent;
@@ -171,6 +176,17 @@ body {
     transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .reveal.in { opacity: 1; transform: translateY(0); }
+
+/* ── Capability column (3D lift) ─────────────────────────────────────────── */
+.cap-col {
+  border-top: 2px solid var(--border-hi);
+  padding-top: var(--space-4);
+  transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s ease;
+}
+.cap-col:hover {
+  transform: perspective(500px) rotateX(-3deg) translateY(-4px);
+  box-shadow: 0 12px 36px -10px oklch(68% 0.110 55 / 0.14);
+}
 
 /* ── Rule ────────────────────────────────────────────────────────────────── */
 .rule { border: none; border-top: 1px solid var(--border); }
