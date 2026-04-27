@@ -2,91 +2,180 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Tokens ──────────────────────────────────────────────────────────────── */
 :root {
-  --accent: #c9956a;
-  --accent-dim: rgba(201, 149, 106, 0.08);
-  --accent-border: rgba(201, 149, 106, 0.25);
+  /* All neutrals tinted toward the accent hue (H65 warm amber) */
+  --bg:           oklch(9.5% 0.006 65);
+  --surface:      oklch(12.5% 0.006 65);
+  --surface-hi:   oklch(16% 0.007 65);
+
+  --text:         oklch(89% 0.010 75);
+  --text-mid:     oklch(64% 0.008 75);
+  --text-muted:   oklch(44% 0.006 75);
+
+  --accent:       oklch(68% 0.110 55);   /* warm copper ~#c9956a */
+  --accent-hi:    oklch(74% 0.110 55);   /* hover */
+  --accent-dim:   oklch(68% 0.110 55 / 0.09);
+  --accent-border:oklch(68% 0.110 55 / 0.28);
+
+  --border:       oklch(100% 0 0 / 0.07);
+  --border-hi:    oklch(100% 0 0 / 0.12);
+
+  --green:        oklch(72% 0.13 152);
+  --green-dim:    oklch(72% 0.13 152 / 0.08);
+  --green-border: oklch(72% 0.13 152 / 0.25);
+
+  /* Space scale (4pt) */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
 }
+
+/* ── Base ────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
 
 body {
-  background-color: #0a0a0a;
-  color: #e4e0d8;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 300;
   overflow-x: hidden;
+  /* Light text on dark: slightly tighter line height base */
+  line-height: 1.6;
 }
 
-/* Selection */
 ::selection {
-  background: rgba(201, 149, 106, 0.25);
-  color: #e4e0d8;
+  background: var(--accent-dim);
+  color: var(--text);
 }
 
-/* Nav */
-.glass-nav {
-  background: rgba(10, 10, 10, 0.75);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+/* ── Typography helpers ──────────────────────────────────────────────────── */
+.font-display { font-family: var(--font-display); }
+.font-body    { font-family: var(--font-body); }
+.font-mono    { font-family: var(--font-mono); }
+
+/* ── Nav ─────────────────────────────────────────────────────────────────── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: oklch(9.5% 0.006 65 / 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
 }
 
-/* Cards */
-.bento-card {
-  background: rgba(16, 14, 12, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: border-color 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
-}
-.bento-card:hover {
-  border-color: rgba(201, 149, 106, 0.28);
-  transform: translateY(-3px);
-  box-shadow: 0 16px 40px -12px rgba(201, 149, 106, 0.08);
-}
-
-/* Writing row */
-.writing-row {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  transition: background 0.2s ease;
-}
-.writing-row:first-child {
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-.writing-row:hover {
-  background: rgba(201, 149, 106, 0.04);
-}
-
-/* Scroll reveal */
-.reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Tag / badge */
-.tag {
-  display: inline-block;
+/* ── Label / tag ─────────────────────────────────────────────────────────── */
+.label {
   font-family: var(--font-mono);
   font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ── Writing rows ────────────────────────────────────────────────────────── */
+.post-row {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: var(--space-5);
+  align-items: baseline;
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  transition: background 0.18s ease;
+  cursor: pointer;
+}
+.post-row:first-of-type {
+  border-top: 1px solid var(--border);
+}
+.post-row:hover {
+  background: var(--accent-dim);
+  margin-inline: calc(var(--space-4) * -1);
+  padding-inline: var(--space-4);
+  border-radius: 6px;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
+.post-row:hover + .post-row {
+  border-top-color: transparent;
+}
+
+/* ── Project entries ─────────────────────────────────────────────────────── */
+.project-entry {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-5);
+  align-items: start;
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  transition: background 0.18s ease;
+}
+.project-entry:first-of-type {
+  border-top: 1px solid var(--border);
+}
+.project-entry:hover {
+  background: var(--accent-dim);
+  margin-inline: calc(var(--space-4) * -1);
+  padding-inline: var(--space-4);
+  border-radius: 6px;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
+.project-entry:hover + .project-entry {
+  border-top-color: transparent;
+}
+
+/* ── Status badge ────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--accent);
-  border: 1px solid var(--accent-border);
-  background: var(--accent-dim);
-  padding: 3px 10px;
+  padding: 3px 8px;
   border-radius: 4px;
 }
-
-/* Divider */
-.section-rule {
-  border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+.badge::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
 }
+.badge-live  { color: var(--green);  border: 1px solid var(--green-border);  background: var(--green-dim); }
+.badge-wip   { color: var(--accent); border: 1px solid var(--accent-border); background: var(--accent-dim); }
+.badge-arch  { color: var(--text-muted); border: 1px solid var(--border); background: transparent; }
 
-/* Scrollbar */
+/* ── Reveal ──────────────────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity  0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+
+/* ── Rule ────────────────────────────────────────────────────────────────── */
+.rule { border: none; border-top: 1px solid var(--border); }
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #0a0a0a; }
-::-webkit-scrollbar-thumb { background: #222; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #333; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--surface-hi); border-radius: 4px; }

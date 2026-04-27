@@ -2,453 +2,353 @@
 
 import { useEffect, useRef } from 'react'
 
-// ── Scroll reveal ──────────────────────────────────────────────────────────────
+// ── Reveal ────────────────────────────────────────────────────────────────────
 function Reveal({
   children,
   delay = 0,
-  className = '',
+  style = {},
 }: {
   children: React.ReactNode
   delay?: number
-  className?: string
+  style?: React.CSSProperties
 }) {
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const el = ref.current
     if (!el) return
     const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add('active')
-          obs.disconnect()
-        }
-      },
-      { threshold: 0.1 }
+      ([e]) => { if (e.isIntersecting) { el.classList.add('in'); obs.disconnect() } },
+      { threshold: 0.08 }
     )
     obs.observe(el)
     return () => obs.disconnect()
   }, [])
   return (
-    <div
-      ref={ref}
-      className={`reveal ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
+    <div ref={ref} className="reveal" style={{ transitionDelay: `${delay}ms`, ...style }}>
       {children}
     </div>
   )
 }
 
-// ── Constants ──────────────────────────────────────────────────────────────────
-const ACCENT = '#c9956a'
+// ── Data ──────────────────────────────────────────────────────────────────────
+const POSTS = [
+  {
+    date: 'Apr '26',
+    title: 'How I open an AI build session without losing the plot',
+    excerpt: 'A compact ritual for turning messy intent into a clear first commit — constraints visible from the start.',
+    href: '#',
+  },
+  {
+    date: 'Mar '26',
+    title: 'Executive support is product thinking in a quieter room',
+    excerpt: 'On prioritisation, sharp communication, and why good assistants think in systems before software.',
+    href: '#',
+  },
+]
 
 const PROJECTS = [
   {
     name: 'Relay',
     year: '2026',
-    status: 'WIP',
-    desc: 'A lightweight operating surface for handoffs, reminders, and clear executive follow-through.',
+    status: 'WIP' as const,
+    desc: 'Operating surface for handoffs, reminders, and clear executive follow-through.',
     stack: ['Next.js', 'Supabase', 'Vercel'],
     href: '#',
   },
   {
     name: 'Portfolio OS',
     year: '2026',
-    status: 'LIVE',
-    desc: 'A personal publishing and proof-of-work system for notes, builds, and public experiments.',
+    status: 'LIVE' as const,
+    desc: 'Personal publishing system for notes, builds, and public experiments.',
     stack: ['TypeScript', 'Tailwind', 'Notion'],
     href: '#',
   },
   {
     name: 'Audit Arsenal',
     year: '2025',
-    status: 'LIVE',
-    desc: 'A prompt-driven review kit for finding weak copy, brittle UI states, and unclear workflows.',
+    status: 'LIVE' as const,
+    desc: 'Prompt-driven review kit for finding weak copy, brittle UI states, and unclear workflows.',
     stack: ['Claude API', 'n8n', 'Linear'],
     href: '#',
   },
 ]
 
-const POSTS = [
-  {
-    date: 'Apr 2026',
-    category: 'Process',
-    readTime: '4 min',
-    title: 'How I open an AI build session without losing the plot',
-    excerpt:
-      'A compact ritual for turning messy intent into a clear first commit, with constraints visible from the start.',
-    href: '#',
-  },
-  {
-    date: 'Mar 2026',
-    category: 'Ops',
-    readTime: '6 min',
-    title: 'Executive support is product thinking in a quieter room',
-    excerpt:
-      'Notes on prioritisation, sharp communication, and why good assistants think in systems before software.',
-    href: '#',
-  },
-]
-
 const TOOLS = [
-  'Next.js', 'Supabase', 'Vercel', 'Claude API',
-  'TypeScript', 'Tailwind CSS', 'Cursor', 'n8n', 'Notion', 'Linear',
+  ['Next.js', 'Supabase', 'Vercel', 'Claude API', 'TypeScript'],
+  ['Tailwind CSS', 'Cursor', 'n8n', 'Notion', 'Linear'],
 ]
 
-const CAPABILITIES = [
-  {
-    label: 'Support',
-    title: 'Executive Support',
-    desc: 'Calendar judgment, crisp communication, meeting flow, and operational follow-through for leaders who need signal over noise.',
-  },
-  {
-    label: 'Build',
-    title: 'AI-Assisted Building',
-    desc: 'Next.js interfaces, Supabase-backed tools, Vercel deployment paths, and Claude-powered workflows shaped with intent.',
-  },
-  {
-    label: 'Systems',
-    title: 'Systems Thinking',
-    desc: 'Audit prompts, repeatable checklists, session openers, and structured workflows that make daily work easier to trust.',
-  },
-]
-
-// ── Shared inline styles ───────────────────────────────────────────────────────
-const TEXT_MUTED = 'rgba(228,224,216,0.45)'
-const TEXT_DIM   = 'rgba(228,224,216,0.65)'
-const TEXT_MAIN  = '#e4e0d8'
-
-// ── Nav ────────────────────────────────────────────────────────────────────────
+// ── Nav ───────────────────────────────────────────────────────────────────────
 function Nav() {
   const links = [
     { label: 'Writing', href: '#writing' },
     { label: 'Work',    href: '#work'    },
     { label: 'About',   href: '#about'   },
-    { label: 'Tools',   href: '#tools'   },
   ]
-
   return (
-    <header className="glass-nav" style={{ position: 'sticky', top: 0, zIndex: 100, padding: '0 32px' }}>
-      <div style={{ maxWidth: 1080, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 56 }}>
-        <a
-          href="#hero"
-          style={{ fontFamily: 'var(--font-serif)', fontSize: 17, fontWeight: 600, color: TEXT_MAIN, textDecoration: 'none', letterSpacing: '-0.01em' }}
-        >
+    <header className="nav">
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '0 var(--space-6)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 52 }}>
+        <a href="#hero" style={{ fontFamily: 'var(--font-display)', fontSize: 17, fontWeight: 700, color: 'var(--text)', textDecoration: 'none', letterSpacing: '-0.02em' }}>
           Tarun Sharma
         </a>
-
-        <nav style={{ display: 'flex', gap: 32, alignItems: 'center' }}>
+        <nav style={{ display: 'flex', gap: 'var(--space-7)', alignItems: 'center' }}>
           {links.map(l => (
-            <a
-              key={l.label}
-              href={l.href}
-              style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', color: TEXT_MUTED, textDecoration: 'none', transition: 'color 0.15s' }}
-              onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = TEXT_MAIN)}
-              onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = TEXT_MUTED)}
-            >
-              {l.label}
-            </a>
+            <a key={l.label} href={l.href} style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.15s' }}
+              onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = 'var(--text)')}
+              onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'var(--text-muted)')}
+            >{l.label}</a>
           ))}
-          <a
-            href="#contact"
-            style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: ACCENT, border: `1px solid rgba(201,149,106,0.3)`, background: 'rgba(201,149,106,0.07)', padding: '7px 18px', borderRadius: 6, textDecoration: 'none', transition: 'background 0.2s, border-color 0.2s' }}
-            onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.background = 'rgba(201,149,106,0.13)'; el.style.borderColor = 'rgba(201,149,106,0.5)' }}
-            onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.background = 'rgba(201,149,106,0.07)'; el.style.borderColor = 'rgba(201,149,106,0.3)' }}
-          >
-            Open to Work →
-          </a>
+          <a href="#contact" style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent)', border: '1px solid var(--accent-border)', background: 'var(--accent-dim)', padding: '6px 14px', borderRadius: 5, textDecoration: 'none', transition: 'background 0.18s' }}
+            onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = 'oklch(68% 0.110 55 / 0.16)')}
+            onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = 'var(--accent-dim)')}
+          >Open to work</a>
         </nav>
       </div>
     </header>
   )
 }
 
-// ── Page ───────────────────────────────────────────────────────────────────────
+// ── Page ──────────────────────────────────────────────────────────────────────
 export default function Home() {
-  const marqueeTools = [...TOOLS, ...TOOLS, ...TOOLS]
-
   return (
     <>
       <Nav />
-
-      <main style={{ maxWidth: 1080, margin: '0 auto', padding: '0 32px' }}>
+      <main style={{ maxWidth: 800, margin: '0 auto', padding: '0 var(--space-6)' }}>
 
         {/* ── Hero ── */}
-        <section id="hero" style={{ padding: '96px 0 80px' }}>
+        <section id="hero" style={{ padding: 'var(--space-10) 0 var(--space-9)' }}>
           <Reveal>
-            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: TEXT_MUTED, marginBottom: 28 }}>
+            <p className="label" style={{ marginBottom: 'var(--space-6)' }}>
               Executive Assistant · Builder · Hyderabad
             </p>
           </Reveal>
 
-          <Reveal delay={80}>
-            <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(52px, 7vw, 88px)', fontWeight: 700, color: TEXT_MAIN, lineHeight: 1.05, letterSpacing: '-0.025em', marginBottom: 32, maxWidth: 760 }}>
+          <Reveal delay={60}>
+            <h1 style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(56px, 9vw, 104px)',
+              fontWeight: 900,
+              color: 'var(--text)',
+              lineHeight: 0.95,
+              letterSpacing: '-0.035em',
+              marginBottom: 'var(--space-7)',
+              maxWidth: '10ch',
+            }}>
               The EA who ships code.
             </h1>
           </Reveal>
 
-          <Reveal delay={160}>
-            <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 300, fontSize: 18, color: TEXT_DIM, maxWidth: 560, lineHeight: 1.75, marginBottom: 40 }}>
-              Tarun Sharma spends his days running operations for C-suite executives and his nights building software with Next.js, Supabase, and Claude.
-              Four years of instinct about what actually matters — compressed into systems that work quietly.
+          <Reveal delay={120}>
+            <p style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 18, color: 'var(--text-mid)', lineHeight: 1.8, maxWidth: '52ch', marginBottom: 'var(--space-6)' }}>
+              Four years running operations for C-suite executives. Nights spent building software
+              with Next.js, Supabase, and Claude. The instincts from one keep the other honest.
             </p>
           </Reveal>
 
-          <Reveal delay={220}>
-            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
-              <a
-                href="#writing"
-                style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: ACCENT, border: '1px solid rgba(201,149,106,0.35)', background: 'rgba(201,149,106,0.09)', padding: '11px 24px', borderRadius: 6, textDecoration: 'none', transition: 'background 0.2s' }}
-              >
-                Read the writing →
-              </a>
-              <a
-                href="#work"
-                style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: TEXT_DIM, border: '1px solid rgba(255,255,255,0.09)', background: 'transparent', padding: '11px 24px', borderRadius: 6, textDecoration: 'none', transition: 'color 0.2s, border-color 0.2s' }}
-                onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.color = TEXT_MAIN; el.style.borderColor = 'rgba(255,255,255,0.2)' }}
-                onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.color = TEXT_DIM; el.style.borderColor = 'rgba(255,255,255,0.09)' }}
-              >
-                See the work
-              </a>
+          <Reveal delay={170}>
+            <div style={{ display: 'flex', gap: 'var(--space-6)', alignItems: 'baseline', marginBottom: 'var(--space-8)' }}>
+              <a href="#writing" style={{ fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 700, color: 'var(--accent)', textDecoration: 'none', letterSpacing: '-0.01em', transition: 'color 0.15s' }}
+                onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = 'var(--accent-hi)')}
+                onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'var(--accent)')}
+              >Read the writing →</a>
+              <a href="#work" style={{ fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 600, color: 'var(--text-muted)', textDecoration: 'none', letterSpacing: '-0.01em', transition: 'color 0.15s' }}
+                onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = 'var(--text)')}
+                onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'var(--text-muted)')}
+              >See the work</a>
             </div>
           </Reveal>
 
-          {/* Thin divider */}
-          <hr className="section-rule" style={{ marginTop: 80 }} />
-        </section>
-
-        {/* ── Writing (promoted) ── */}
-        <section id="writing" style={{ padding: '72px 0' }}>
-          <Reveal>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 40 }}>
-              <div>
-                <span className="tag" style={{ marginBottom: 14, display: 'inline-block' }}>Notes</span>
-                <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(28px, 3.5vw, 40px)', fontWeight: 600, color: TEXT_MAIN, lineHeight: 1.15, letterSpacing: '-0.015em' }}>
-                  Writing
-                </h2>
-              </div>
-              <a
-                href="#"
-                style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: ACCENT, textDecoration: 'none' }}
-              >
-                All posts →
-              </a>
+          {/* Now strip */}
+          <Reveal delay={210}>
+            <div style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'center', paddingTop: 'var(--space-5)', borderTop: '1px solid var(--border)' }}>
+              <span className="label" style={{ color: 'var(--text-muted)' }}>Now</span>
+              <span style={{ fontFamily: 'var(--font-body)', fontStyle: 'italic', fontSize: 14, color: 'var(--text-mid)' }}>
+                Building Relay · Looking for EA roles · Open to collaboration
+              </span>
             </div>
           </Reveal>
-
-          <div>
-            {POSTS.map((post, i) => (
-              <Reveal key={post.title} delay={i * 80}>
-                <a
-                  href={post.href}
-                  className="writing-row"
-                  style={{ display: 'grid', gridTemplateColumns: '90px 76px 1fr 28px', gap: 24, alignItems: 'center', padding: '22px 0', textDecoration: 'none' }}
-                >
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: TEXT_MUTED }}>
-                    {post.date}
-                  </span>
-                  <span className="tag">{post.category}</span>
-                  <div>
-                    <div style={{ fontFamily: 'var(--font-serif)', fontSize: 16, fontWeight: 600, color: TEXT_MAIN, marginBottom: 5, letterSpacing: '-0.01em' }}>
-                      {post.title}
-                    </div>
-                    <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 300, fontSize: 13, color: TEXT_MUTED, lineHeight: 1.6 }}>
-                      {post.excerpt}
-                    </div>
-                  </div>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 14, color: TEXT_MUTED, justifySelf: 'end', transition: 'color 0.15s' }}>
-                    →
-                  </span>
-                </a>
-              </Reveal>
-            ))}
-          </div>
-
-          <hr className="section-rule" style={{ marginTop: 72 }} />
         </section>
 
-        {/* ── Projects ── */}
-        <section id="work" style={{ padding: '72px 0' }}>
+        {/* ── Writing ── */}
+        <section id="writing" style={{ paddingBottom: 'var(--space-9)' }}>
           <Reveal>
-            <div style={{ marginBottom: 40 }}>
-              <span className="tag" style={{ marginBottom: 14, display: 'inline-block' }}>Selected Work</span>
-              <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(28px,3.5vw,40px)', fontWeight: 600, color: TEXT_MAIN, lineHeight: 1.15, letterSpacing: '-0.015em' }}>
-                Projects
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-6)' }}>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(26px, 4vw, 36px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.025em', lineHeight: 1 }}>
+                Writing
               </h2>
+              <a href="#" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.15s' }}
+                onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = 'var(--accent)')}
+                onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'var(--text-muted)')}
+              >All posts →</a>
             </div>
           </Reveal>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }}>
-            {PROJECTS.map((p, i) => (
-              <Reveal key={p.name} delay={i * 70}>
-                <a
-                  href={p.href}
-                  className="bento-card"
-                  style={{ display: 'flex', flexDirection: 'column', padding: 24, borderRadius: 10, textDecoration: 'none', minHeight: 220 }}
-                >
-                  {/* Header row */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14 }}>
-                    <div>
-                      <div style={{ fontFamily: 'var(--font-serif)', fontSize: 17, fontWeight: 600, color: TEXT_MAIN, letterSpacing: '-0.01em' }}>
-                        {p.name}
-                      </div>
-                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: TEXT_MUTED, marginTop: 3, letterSpacing: '0.06em' }}>
-                        {p.year}
-                      </div>
-                    </div>
-                    <span
-                      style={{
-                        fontFamily: 'var(--font-mono)',
-                        fontSize: 9,
-                        fontWeight: 700,
-                        letterSpacing: '0.1em',
-                        textTransform: 'uppercase',
-                        color: p.status === 'LIVE' ? '#6ec97a' : p.status === 'WIP' ? ACCENT : TEXT_MUTED,
-                        border: `1px solid ${p.status === 'LIVE' ? 'rgba(110,201,122,0.25)' : p.status === 'WIP' ? 'rgba(201,149,106,0.25)' : 'rgba(255,255,255,0.1)'}`,
-                        background: p.status === 'LIVE' ? 'rgba(110,201,122,0.07)' : p.status === 'WIP' ? 'rgba(201,149,106,0.07)' : 'rgba(255,255,255,0.04)',
-                        padding: '3px 8px',
-                        borderRadius: 4,
-                      }}
-                    >
-                      {p.status}
+          {POSTS.map((post, i) => (
+            <Reveal key={post.title} delay={i * 60}>
+              <a href={post.href} className="post-row">
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)', paddingTop: 3 }}>
+                  {post.date}
+                </span>
+                <div>
+                  <div style={{ fontFamily: 'var(--font-display)', fontSize: 17, fontWeight: 700, color: 'var(--text)', letterSpacing: '-0.015em', lineHeight: 1.2, marginBottom: 5 }}>
+                    {post.title}
+                  </div>
+                  <div style={{ fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, maxWidth: '55ch' }}>
+                    {post.excerpt}
+                  </div>
+                </div>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 16, color: 'var(--text-muted)', paddingTop: 1 }}>→</span>
+              </a>
+            </Reveal>
+          ))}
+        </section>
+
+        {/* ── Work ── */}
+        <section id="work" style={{ paddingBottom: 'var(--space-9)' }}>
+          <Reveal>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(26px, 4vw, 36px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.025em', lineHeight: 1, marginBottom: 'var(--space-6)' }}>
+              Work
+            </h2>
+          </Reveal>
+
+          {PROJECTS.map((p, i) => (
+            <Reveal key={p.name} delay={i * 60}>
+              <a href={p.href} className="project-entry">
+                {/* Left */}
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 6 }}>
+                    <span style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em' }}>
+                      {p.name}
+                    </span>
+                    <span className={`badge badge-${p.status.toLowerCase()}`}>{p.status}</span>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.06em' }}>
+                      {p.year}
                     </span>
                   </div>
-
-                  <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 300, fontSize: 13, color: TEXT_MUTED, lineHeight: 1.7, flex: 1 }}>
+                  <p style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 14, color: 'var(--text-mid)', lineHeight: 1.65, maxWidth: '52ch', marginBottom: 10 }}>
                     {p.desc}
                   </p>
-
-                  {/* Stack */}
-                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 18 }}>
+                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                     {p.stack.map(s => (
-                      <span
-                        key={s}
-                        style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: TEXT_MUTED, border: '1px solid rgba(255,255,255,0.08)', padding: '2px 7px', borderRadius: 3 }}
-                      >
+                      <span key={s} style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-muted)', border: '1px solid var(--border-hi)', padding: '2px 7px', borderRadius: 3 }}>
                         {s}
                       </span>
                     ))}
                   </div>
-                </a>
-              </Reveal>
-            ))}
-          </div>
-
-          <hr className="section-rule" style={{ marginTop: 72 }} />
+                </div>
+                {/* Arrow */}
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 16, color: 'var(--text-muted)', paddingTop: 2 }}>→</span>
+              </a>
+            </Reveal>
+          ))}
         </section>
 
         {/* ── About ── */}
-        <section id="about" style={{ padding: '72px 0' }}>
+        <section id="about" style={{ paddingBottom: 'var(--space-9)' }}>
           <Reveal>
-            <div style={{ marginBottom: 48 }}>
-              <span className="tag" style={{ marginBottom: 14, display: 'inline-block' }}>What I Do</span>
-              <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(28px,3.5vw,40px)', fontWeight: 600, color: TEXT_MAIN, lineHeight: 1.15, letterSpacing: '-0.015em' }}>
-                Calm execution,<br />deliberate tools.
-              </h2>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(26px, 4vw, 36px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.025em', lineHeight: 1, marginBottom: 'var(--space-6)' }}>
+              About
+            </h2>
+          </Reveal>
+
+          <Reveal delay={60}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 200px', gap: 'var(--space-8)', alignItems: 'start' }}>
+              {/* Prose */}
+              <div>
+                <p style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 16, color: 'var(--text-mid)', lineHeight: 1.85, marginBottom: 'var(--space-5)', maxWidth: '52ch' }}>
+                  By day, Tarun manages calendars, correspondence, and operational follow-through
+                  for senior executives — the kind of work where precision and discretion matter more
+                  than speed.
+                </p>
+                <p style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 16, color: 'var(--text-muted)', lineHeight: 1.85, maxWidth: '52ch' }}>
+                  By night, he turns those same instincts into software. The bias for maintainable
+                  structure, clear communication, and closing loops translates surprisingly well
+                  to Next.js, Supabase, and Claude.
+                </p>
+              </div>
+              {/* Quick facts */}
+              <div style={{ paddingTop: 4 }}>
+                {[
+                  ['Role',    'EA + Solo Builder'],
+                  ['Stack',   'Next.js / Supabase'],
+                  ['Based',   'Hyderabad, IN'],
+                  ['Status',  'Open to work'],
+                ].map(([k, v]) => (
+                  <div key={k} style={{ paddingBottom: 'var(--space-4)', marginBottom: 'var(--space-4)', borderBottom: '1px solid var(--border)' }}>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 3 }}>{k}</div>
+                    <div style={{ fontFamily: 'var(--font-display)', fontSize: 14, fontWeight: 700, color: 'var(--text)', letterSpacing: '-0.01em' }}>{v}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </Reveal>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'start' }}>
-            <Reveal>
-              <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 300, fontSize: 15, color: TEXT_DIM, lineHeight: 1.85, marginBottom: 24 }}>
-                Tarun sits at the overlap of executive operations and practical product building.
-                The day job sharpens the instincts: prioritise clearly, write precisely, close loops without drama.
-              </p>
-              <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 300, fontSize: 15, color: TEXT_MUTED, lineHeight: 1.85 }}>
-                The night work turns those instincts into small software systems — built with AI,
-                Next.js, Supabase, and a bias for maintainable structure over flashy complexity.
-              </p>
-            </Reveal>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {CAPABILITIES.map((cap, i) => (
-                <Reveal key={cap.label} delay={i * 80}>
-                  <div className="bento-card" style={{ padding: '20px 22px', borderRadius: 10 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-                      <span className="tag">{cap.label}</span>
-                      <span style={{ fontFamily: 'var(--font-serif)', fontSize: 15, fontWeight: 600, color: TEXT_MAIN, letterSpacing: '-0.01em' }}>
-                        {cap.title}
-                      </span>
-                    </div>
-                    <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 300, fontSize: 13, color: TEXT_MUTED, lineHeight: 1.7 }}>
-                      {cap.desc}
-                    </p>
-                  </div>
-                </Reveal>
+          {/* Capabilities */}
+          <Reveal delay={100} style={{ marginTop: 'var(--space-7)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--space-5)' }}>
+              {[
+                { label: 'Support', body: 'Calendar judgment, crisp comms, meeting flow. Signal over noise.' },
+                { label: 'Build',   body: 'Next.js interfaces, Supabase backends, Claude-powered workflows.' },
+                { label: 'Systems', body: 'Audit prompts, repeatable checklists, structured processes.' },
+              ].map(c => (
+                <div key={c.label} style={{ borderTop: '2px solid var(--border-hi)', paddingTop: 'var(--space-4)' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 8 }}>{c.label}</div>
+                  <p style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.7 }}>{c.body}</p>
+                </div>
               ))}
             </div>
-          </div>
-
-          <hr className="section-rule" style={{ marginTop: 72 }} />
+          </Reveal>
         </section>
 
-        {/* ── Tools marquee ── */}
-        <section id="tools" style={{ padding: '64px 0' }}>
+        {/* ── Tools ── */}
+        <section id="tools" style={{ paddingBottom: 'var(--space-9)' }}>
           <Reveal>
-            <div style={{ marginBottom: 28 }}>
-              <span className="tag" style={{ marginBottom: 14, display: 'inline-block' }}>Daily Stack</span>
-              <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(24px,3vw,36px)', fontWeight: 600, color: TEXT_MAIN, lineHeight: 1.15, letterSpacing: '-0.015em' }}>
-                Tools
-              </h2>
-            </div>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(26px, 4vw, 36px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.025em', lineHeight: 1, marginBottom: 'var(--space-6)' }}>
+              Tools
+            </h2>
           </Reveal>
-
-          <div style={{ overflow: 'hidden' }}>
-            <div
-              className="animate-marquee-left"
-              style={{ display: 'flex', gap: 10, width: 'max-content' }}
-            >
-              {marqueeTools.map((t, i) => (
-                <span
-                  key={i}
-                  style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: TEXT_DIM, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)', padding: '8px 18px', borderRadius: 6, whiteSpace: 'nowrap' }}
-                >
-                  {t}
-                </span>
+          <Reveal delay={60}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-2) var(--space-8)' }}>
+              {TOOLS.flat().map((tool, i) => (
+                <div key={tool} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', padding: 'var(--space-3) 0', borderBottom: '1px solid var(--border)' }}>
+                  <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--accent)', flexShrink: 0, opacity: 0.7 }} />
+                  <span style={{ fontFamily: 'var(--font-display)', fontSize: 15, fontWeight: 600, color: 'var(--text-mid)', letterSpacing: '-0.01em' }}>{tool}</span>
+                </div>
               ))}
             </div>
-          </div>
-
-          <hr className="section-rule" style={{ marginTop: 64 }} />
+          </Reveal>
         </section>
 
         {/* ── Contact ── */}
-        <section id="contact" style={{ padding: '72px 0 96px' }}>
+        <section id="contact" style={{ paddingBottom: 'var(--space-10)' }}>
+          <hr className="rule" style={{ marginBottom: 'var(--space-8)' }} />
           <Reveal>
-            <span className="tag" style={{ marginBottom: 20, display: 'inline-block' }}>Contact</span>
-            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 600, color: TEXT_MAIN, lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: 16 }}>
-              Let&apos;s work together.
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(40px, 7vw, 80px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.035em', lineHeight: 0.95, marginBottom: 'var(--space-6)', maxWidth: '10ch' }}>
+              Let&apos;s work.
             </h2>
-            <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 300, fontSize: 16, color: TEXT_MUTED, marginBottom: 36, maxWidth: 440, lineHeight: 1.7 }}>
-              Open to EA roles, consulting, and collaboration on interesting systems. Always happy to talk shop.
+            <p style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 16, color: 'var(--text-muted)', lineHeight: 1.8, maxWidth: '44ch', marginBottom: 'var(--space-6)' }}>
+              Open to EA roles, consulting, and collaboration on interesting systems.
+              Always happy to talk shop.
             </p>
-            <a
-              href="mailto:mail2tarun.30@gmail.com"
-              style={{ fontFamily: 'var(--font-mono)', fontSize: 15, fontWeight: 600, color: ACCENT, textDecoration: 'none', letterSpacing: '-0.01em', display: 'inline-block', marginBottom: 48, borderBottom: `1px solid rgba(201,149,106,0.3)`, paddingBottom: 2 }}
+            <a href="mailto:mail2tarun.30@gmail.com" style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 700, color: 'var(--accent)', textDecoration: 'none', letterSpacing: '-0.02em', display: 'inline-block', marginBottom: 'var(--space-7)', borderBottom: '1px solid var(--accent-border)', paddingBottom: 2, transition: 'color 0.15s' }}
+              onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = 'var(--accent-hi)')}
+              onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'var(--accent)')}
             >
               mail2tarun.30@gmail.com
             </a>
-
-            <div style={{ display: 'flex', gap: 24, marginBottom: 64 }}>
+            <div style={{ display: 'flex', gap: 'var(--space-7)', marginBottom: 'var(--space-8)' }}>
               {[
                 { label: 'X / Twitter', href: 'https://x.com/' },
-                { label: 'GitHub', href: 'https://github.com/Tarun2030' },
-                { label: 'LinkedIn', href: 'https://linkedin.com/in/' },
+                { label: 'GitHub',      href: 'https://github.com/Tarun2030' },
+                { label: 'LinkedIn',    href: 'https://linkedin.com/in/' },
               ].map(s => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: TEXT_MUTED, textDecoration: 'none', transition: 'color 0.15s' }}
-                  onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = ACCENT)}
-                  onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = TEXT_MUTED)}
-                >
-                  {s.label} →
-                </a>
+                <a key={s.label} href={s.href} style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.15s' }}
+                  onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = 'var(--accent)')}
+                  onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'var(--text-muted)')}
+                >{s.label}</a>
               ))}
             </div>
-
-            <hr className="section-rule" style={{ marginBottom: 24 }} />
-            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(228,224,216,0.2)' }}>
+            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 400, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', opacity: 0.5 }}>
               Built by Tarun · Next.js · Vercel · 2026
             </p>
           </Reveal>
