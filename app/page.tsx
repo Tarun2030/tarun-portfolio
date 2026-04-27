@@ -2,6 +2,39 @@
 
 import { useEffect, useRef } from 'react'
 
+// ── Scroll parallax ───────────────────────────────────────────────────────────
+function useScrollParallax(factor = 0.15) {
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    let raf: number
+    const tick = () => {
+      if (ref.current) ref.current.style.transform = `translateY(${window.scrollY * factor}px)`
+    }
+    const onScroll = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(tick) }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(raf) }
+  }, [factor])
+  return ref
+}
+
+// ── Hero fade on scroll ───────────────────────────────────────────────────────
+function useHeroScroll() {
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    let raf: number
+    const tick = () => {
+      if (!ref.current) return
+      const p = Math.min(window.scrollY / 520, 1)
+      ref.current.style.opacity = String(1 - p * 0.6)
+      ref.current.style.transform = `translateY(${p * -36}px)`
+    }
+    const onScroll = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(tick) }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(raf) }
+  }, [])
+  return ref
+}
+
 // ── 3D tilt ───────────────────────────────────────────────────────────────────
 function useTilt(strength = 10) {
   const ref = useRef<HTMLDivElement>(null)
@@ -109,10 +142,15 @@ function Nav() {
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 export default function Home() {
-  const heroTilt = useTilt(7)
+  const heroTilt    = useTilt(7)
+  const photoParallax = useScrollParallax(0.12)
+  const heroFade    = useHeroScroll()
 
   return (
     <>
+      {/* Scroll progress */}
+      <div className="scroll-progress" aria-hidden />
+
       {/* Background blobs */}
       <div className="bg-mesh" aria-hidden>
         <div className="bg-mesh-bottom" />
@@ -126,7 +164,7 @@ export default function Home() {
         <section id="hero" style={{ paddingTop: 'calc(var(--space-10) + 48px)', paddingBottom: 'var(--space-9)', position: 'relative' }}>
 
           {/* Photo — right side, bleeds into bg */}
-          <div className="hero-photo" style={{
+          <div ref={photoParallax} className="hero-photo" style={{
             position: 'absolute',
             top: 'calc(var(--space-10) + 20px)',
             right: '-40px',
@@ -155,7 +193,7 @@ export default function Home() {
           </div>
 
           {/* Text — sits above photo via z-index */}
-          <div style={{ position: 'relative', zIndex: 1 }}>
+          <div ref={heroFade} style={{ position: 'relative', zIndex: 1, willChange: 'transform, opacity' }}>
             <Reveal>
               <p className="label" style={{ marginBottom: 'var(--space-5)' }}>
                 EA · Builder · Raipur, C.G.
