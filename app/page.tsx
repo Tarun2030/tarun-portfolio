@@ -9,27 +9,28 @@ function ParticleCanvas() {
   useEffect(() => {
     const canvas = ref.current
     if (!canvas) return
-    const ctx = canvas.getContext('2d')!
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
     let raf: number
 
     const dots: { x: number; y: number; vx: number; vy: number }[] = []
     const COUNT = 60
 
-    const resize = () => {
+    const init = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
+      dots.length = 0
+      for (let i = 0; i < COUNT; i++) {
+        dots.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+        })
+      }
     }
-    resize()
-    window.addEventListener('resize', resize)
-
-    for (let i = 0; i < COUNT; i++) {
-      dots.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-      })
-    }
+    init()
+    window.addEventListener('resize', init)
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -60,8 +61,8 @@ function ParticleCanvas() {
     draw()
 
     return () => {
-      cancelAnimationFrame(raf)
-      window.removeEventListener('resize', resize)
+      if (raf) cancelAnimationFrame(raf)
+      window.removeEventListener('resize', init)
     }
   }, [])
 
