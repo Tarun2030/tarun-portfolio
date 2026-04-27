@@ -57,10 +57,10 @@ const PROJECTS = [
   {
     name: 'Relay',
     year: '2026',
-    status: 'WIP' as const,
-    desc: "An EA tool I'm building for myself first. Handoffs, reminders, follow-through — the things that fall between every other tool.",
+    status: 'LIVE' as const,
+    desc: "An EA tool I built for myself first. Live at myrelay.space — handoffs, reminders, follow-through for everything that falls between other tools.",
     stack: ['Next.js', 'Supabase', 'Vercel'],
-    href: '#',
+    href: 'https://myrelay.space',
   },
   {
     name: 'Portfolio OS',
@@ -80,7 +80,8 @@ const PROJECTS = [
   },
 ]
 
-const TOOLS = ['Next.js', 'Supabase', 'Vercel', 'Claude API', 'TypeScript', 'Tailwind CSS', 'Cursor', 'n8n', 'Notion', 'Linear']
+const HARD_SKILLS = ['Next.js', 'TypeScript', 'Supabase', 'Tailwind CSS', 'Vercel', 'Claude API', 'n8n']
+const SOFT_SKILLS = ['Executive Support', 'Ops Design', 'Stakeholder Management', 'Process Systems', 'Cross-functional Coordination']
 
 // ── Nav ───────────────────────────────────────────────────────────────────────
 function Nav() {
@@ -161,9 +162,7 @@ export default function Home() {
 
           <Reveal delay={130}>
             <p style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 18, color: 'var(--text-mid)', lineHeight: 1.8, maxWidth: '50ch', marginBottom: 'var(--space-6)' }}>
-              I work as an EA at a manufacturing company in Raipur. The job is mostly making sure
-              nothing falls through — calendars, follow-ups, execution at pace. Nights go to building.
-              Right now that means Relay: a tool I&apos;m making because I needed one and couldn&apos;t find it.
+              EA by day, builder by night. I run operations at a manufacturing company in Raipur — and I ship tools that fix the gaps I find at work.
             </p>
           </Reveal>
 
@@ -186,7 +185,7 @@ export default function Home() {
               <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--green)', boxShadow: '0 0 8px var(--green)', flexShrink: 0 }} />
               <span className="label" style={{ color: 'var(--text-muted)' }}>Now</span>
               <span style={{ fontFamily: 'var(--font-body)', fontStyle: 'italic', fontSize: 13, color: 'var(--text-mid)' }}>
-                Building Relay · Open to my next EA role · Raipur → wherever the work is
+                Building Relay — Live at myrelay.space · Open to EA roles · Raipur → wherever the work is
               </span>
             </div>
           </Reveal>
@@ -250,6 +249,27 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── Experience ── */}
+        <section id="experience" style={{ paddingBottom: 'var(--space-9)' }}>
+          <Reveal>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px,4vw,42px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 'var(--space-6)' }}>Experience</h2>
+          </Reveal>
+          {[
+            { role: 'Executive Assistant', org: 'Shivalik Engineering Industries Ltd', period: '2024 – Present' },
+            { role: 'Operations Head (Freelance)', org: 'Inseive Overseas', period: '2022 – 2024' },
+          ].map((e, i) => (
+            <Reveal key={e.org} delay={i * 70}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'baseline', padding: 'var(--space-5) 0', borderBottom: '1px solid var(--glass-border)' }}>
+                <div>
+                  <div style={{ fontFamily: 'var(--font-display)', fontSize: 17, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1.2, marginBottom: 4 }}>{e.role}</div>
+                  <div style={{ fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--text-muted)' }}>{e.org}</div>
+                </div>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.06em' }}>{e.period}</span>
+              </div>
+            </Reveal>
+          ))}
+        </section>
+
         {/* ── About ── */}
         <section id="about" style={{ paddingBottom: 'var(--space-9)' }}>
           <Reveal>
@@ -271,7 +291,7 @@ export default function Home() {
                   ['Role',   'EA + Solo Builder'],
                   ['Stack',  'Next.js / Supabase'],
                   ['Based',  'Raipur, C.G.'],
-                  ['Status', 'Open to work'],
+                  ['Status', 'Open to EA roles'],
                 ].map(([k, v], i, arr) => (
                   <div key={k} style={{ paddingBottom: i < arr.length - 1 ? 'var(--space-3)' : 0, marginBottom: i < arr.length - 1 ? 'var(--space-3)' : 0, borderBottom: i < arr.length - 1 ? '1px solid var(--glass-border)' : 'none' }}>
                     <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 3 }}>{k}</div>
@@ -304,8 +324,19 @@ export default function Home() {
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px,4vw,42px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 'var(--space-6)' }}>Tools</h2>
           </Reveal>
           <Reveal delay={60}>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-              {TOOLS.map(t => <span key={t} className="tool-pill">{t}</span>)}
+            <div style={{ marginBottom: 'var(--space-4)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 10 }}>Hard Skills</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                {HARD_SKILLS.map(t => <span key={t} className="tool-pill">{t}</span>)}
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={120}>
+            <div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 10 }}>Soft Skills</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                {SOFT_SKILLS.map(t => <span key={t} className="tool-pill">{t}</span>)}
+              </div>
             </div>
           </Reveal>
         </section>
