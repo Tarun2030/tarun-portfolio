@@ -123,72 +123,103 @@ export default function Home() {
       <main style={{ position: 'relative', zIndex: 1, maxWidth: 860, margin: '0 auto', padding: '0 var(--space-6)' }}>
 
         {/* ── Hero ── */}
-        <section id="hero" style={{ paddingTop: 'calc(var(--space-10) + 48px)', paddingBottom: 'var(--space-9)' }}>
+        <section id="hero" style={{ paddingTop: 'calc(var(--space-10) + 48px)', paddingBottom: 'var(--space-9)', position: 'relative' }}>
 
-          <Reveal>
-            <p className="label" style={{ marginBottom: 'var(--space-5)' }}>
-              EA · Builder · Raipur, C.G.
-            </p>
-          </Reveal>
+          {/* Photo — right side, bleeds into bg */}
+          <div style={{
+            position: 'absolute',
+            top: 'calc(var(--space-10) + 20px)',
+            right: '-40px',
+            width: 'clamp(240px, 36vw, 420px)',
+            height: 'clamp(300px, 48vw, 560px)',
+            pointerEvents: 'none',
+            zIndex: 0,
+          }}>
+            <img
+              src="/tarun.jpg"
+              alt=""
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center top',
+                display: 'block',
+                filter: 'grayscale(18%) contrast(1.06) brightness(0.88)',
+                maskImage: 'linear-gradient(to left, transparent 0%, black 35%), linear-gradient(to top, transparent 0%, black 28%)',
+                WebkitMaskImage: 'linear-gradient(to left, transparent 0%, black 35%), linear-gradient(to top, transparent 0%, black 28%)',
+                maskComposite: 'intersect',
+                WebkitMaskComposite: 'source-in',
+                animation: 'hero-float 5s ease-in-out infinite',
+              }}
+            />
+          </div>
 
-          <Reveal delay={60}>
-            <div
-              ref={heroTilt}
-              style={{ display: 'inline-block', transition: 'transform 0.2s cubic-bezier(0.16,1,0.3,1)', willChange: 'transform', marginBottom: 'var(--space-6)' }}
-            >
-              {/* Glow behind headline */}
-              <div style={{ position: 'relative' }}>
-                <div style={{
-                  position: 'absolute', inset: '-20px -40px',
-                  background: 'radial-gradient(ellipse, oklch(72% 0.18 280 / 0.14) 0%, transparent 70%)',
-                  filter: 'blur(24px)',
-                  pointerEvents: 'none',
-                }} />
-                <h1 style={{
-                  position: 'relative',
-                  fontFamily: 'var(--font-display)',
-                  fontSize: 'clamp(54px, 9vw, 108px)',
-                  fontWeight: 900,
-                  color: 'var(--text)',
-                  lineHeight: 0.93,
-                  letterSpacing: '-0.04em',
-                  maxWidth: '9ch',
-                }}>
-                  I build what I wish existed.
-                </h1>
+          {/* Text — sits above photo via z-index */}
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <Reveal>
+              <p className="label" style={{ marginBottom: 'var(--space-5)' }}>
+                EA · Builder · Raipur, C.G.
+              </p>
+            </Reveal>
+
+            <Reveal delay={60}>
+              <div
+                ref={heroTilt}
+                style={{ display: 'inline-block', transition: 'transform 0.2s cubic-bezier(0.16,1,0.3,1)', willChange: 'transform', marginBottom: 'var(--space-6)' }}
+              >
+                <div style={{ position: 'relative' }}>
+                  <div style={{
+                    position: 'absolute', inset: '-20px -40px',
+                    background: 'radial-gradient(ellipse, oklch(72% 0.18 280 / 0.14) 0%, transparent 70%)',
+                    filter: 'blur(24px)',
+                    pointerEvents: 'none',
+                  }} />
+                  <h1 style={{
+                    position: 'relative',
+                    fontFamily: 'var(--font-display)',
+                    fontSize: 'clamp(54px, 9vw, 108px)',
+                    fontWeight: 900,
+                    color: 'var(--text)',
+                    lineHeight: 0.93,
+                    letterSpacing: '-0.04em',
+                    maxWidth: '9ch',
+                  }}>
+                    I build what I wish existed.
+                  </h1>
+                </div>
               </div>
-            </div>
-          </Reveal>
+            </Reveal>
 
-          <Reveal delay={130}>
-            <p style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 18, color: 'var(--text-mid)', lineHeight: 1.8, maxWidth: '50ch', marginBottom: 'var(--space-6)' }}>
-              EA by day, builder by night. I run operations at a manufacturing company in Raipur — and I ship tools that fix the gaps I find at work.
-            </p>
-          </Reveal>
+            <Reveal delay={130}>
+              <p style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 18, color: 'var(--text-mid)', lineHeight: 1.8, maxWidth: '42ch', marginBottom: 'var(--space-6)' }}>
+                EA by day, builder by night. I run operations at a manufacturing company in Raipur — and I ship tools that fix the gaps I find at work.
+              </p>
+            </Reveal>
 
-          <Reveal delay={180}>
-            <div style={{ display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap', marginBottom: 'var(--space-8)' }}>
-              <a href="#writing" style={{ fontFamily: 'var(--font-display)', fontSize: 15, fontWeight: 700, color: 'var(--bg)', background: 'var(--accent)', padding: '12px 26px', borderRadius: 100, textDecoration: 'none', letterSpacing: '-0.01em', transition: 'opacity 0.15s, transform 0.15s' }}
-                onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.opacity = '0.88'; el.style.transform = 'translateY(-1px)' }}
-                onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.opacity = '1'; el.style.transform = '' }}
-              >Read the writing →</a>
-              <a href="#work" style={{ fontFamily: 'var(--font-display)', fontSize: 15, fontWeight: 700, color: 'var(--accent)', background: 'var(--accent-dim)', border: '1px solid var(--accent-border)', padding: '12px 26px', borderRadius: 100, textDecoration: 'none', letterSpacing: '-0.01em', transition: 'background 0.18s, transform 0.15s' }}
-                onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.background = 'oklch(72% 0.18 280 / 0.18)'; el.style.transform = 'translateY(-1px)' }}
-                onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.background = 'var(--accent-dim)'; el.style.transform = '' }}
-              >See the work</a>
-            </div>
-          </Reveal>
+            <Reveal delay={180}>
+              <div style={{ display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap', marginBottom: 'var(--space-8)' }}>
+                <a href="#writing" style={{ fontFamily: 'var(--font-display)', fontSize: 15, fontWeight: 700, color: 'var(--bg)', background: 'var(--accent)', padding: '12px 26px', borderRadius: 100, textDecoration: 'none', letterSpacing: '-0.01em', transition: 'opacity 0.15s, transform 0.15s' }}
+                  onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.opacity = '0.88'; el.style.transform = 'translateY(-1px)' }}
+                  onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.opacity = '1'; el.style.transform = '' }}
+                >Read the writing →</a>
+                <a href="#work" style={{ fontFamily: 'var(--font-display)', fontSize: 15, fontWeight: 700, color: 'var(--accent)', background: 'var(--accent-dim)', border: '1px solid var(--accent-border)', padding: '12px 26px', borderRadius: 100, textDecoration: 'none', letterSpacing: '-0.01em', transition: 'background 0.18s, transform 0.15s' }}
+                  onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.background = 'oklch(72% 0.18 280 / 0.18)'; el.style.transform = 'translateY(-1px)' }}
+                  onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.background = 'var(--accent-dim)'; el.style.transform = '' }}
+                >See the work</a>
+              </div>
+            </Reveal>
 
-          {/* Now strip */}
-          <Reveal delay={230}>
-            <div className="glass-card" style={{ display: 'inline-flex', gap: 'var(--space-4)', alignItems: 'center', padding: '10px 20px', borderRadius: 100 }}>
-              <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--green)', boxShadow: '0 0 8px var(--green)', flexShrink: 0 }} />
-              <span className="label" style={{ color: 'var(--text-muted)' }}>Now</span>
-              <span style={{ fontFamily: 'var(--font-body)', fontStyle: 'italic', fontSize: 13, color: 'var(--text-mid)' }}>
-                Building Relay — Live at myrelay.space · Raipur → wherever the work is
-              </span>
-            </div>
-          </Reveal>
+            {/* Now strip */}
+            <Reveal delay={230}>
+              <div className="glass-card" style={{ display: 'inline-flex', gap: 'var(--space-4)', alignItems: 'center', padding: '10px 20px', borderRadius: 100 }}>
+                <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--green)', boxShadow: '0 0 8px var(--green)', flexShrink: 0 }} />
+                <span className="label" style={{ color: 'var(--text-muted)' }}>Now</span>
+                <span style={{ fontFamily: 'var(--font-body)', fontStyle: 'italic', fontSize: 13, color: 'var(--text-mid)' }}>
+                  Building Relay — Live at myrelay.space · Raipur → wherever the work is
+                </span>
+              </div>
+            </Reveal>
+          </div>
         </section>
 
         {/* ── Writing ── */}

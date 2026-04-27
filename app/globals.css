@@ -273,6 +273,7 @@ body {
 
 @keyframes marquee-left  { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes marquee-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+@keyframes hero-float    { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
 
 .marquee-overflow {
   overflow: hidden;
