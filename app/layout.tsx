@@ -1,23 +1,23 @@
 import type { Metadata } from 'next'
-import { JetBrains_Mono, Outfit } from 'next/font/google'
+import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-sans',
+})
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  weight: ['400', '600', '700'],
+  weight: ['400', '500'],
   variable: '--font-mono',
 })
 
-const outfit = Outfit({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
-  variable: '--font-body',
-})
-
 export const metadata: Metadata = {
-  title: 'Tarun — EA · Builder · Vibe-Coder',
+  title: 'Tarun Sharma | Engineered Operations',
   description:
-    'Executive Assistant by day, solo builder by night. Next.js + Supabase + Claude. Based in Hyderabad.',
+    'Merging 4+ years of C-suite executive support with full-stack engineering. Transitioning from manual, cross-border logistics to architecting platforms that automate the grind.',
 }
 
 export default function RootLayout({
@@ -26,8 +26,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${jetbrainsMono.variable} ${outfit.variable}`}>
-      <body>{children}</body>
+    <html lang="en" className={`scroll-smooth ${inter.variable} ${jetbrainsMono.variable}`}>
+      <body className="antialiased font-sans selection:bg-indigo-500/30 selection:text-indigo-200 relative">
+        {children}
+      </body>
     </html>
   )
 }

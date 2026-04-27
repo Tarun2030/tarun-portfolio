@@ -2,125 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bg:           #080808;
-  --surface:      #101010;
-  --elevated:     #141414;
-  --border:       #1E1E1E;
-  --border-hi:    #2A2A2A;
-  --text:         #E8E8E8;
-  --muted:        #505050;
-  --dim:          #2E2E2E;
-  --accent:       #00E5A0;
-  --accent-dim:   rgba(0, 229, 160, 0.08);
-  --accent-mid:   rgba(0, 229, 160, 0.18);
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body), sans-serif;
-  font-size: 15px;
-  line-height: 1.7;
-  -webkit-font-smoothing: antialiased;
+  background-color: #030305;
+  color: #ededed;
+  overflow-x: hidden;
 }
 
-.font-mono { font-family: var(--font-mono), monospace !important; }
-
-/* Glass card */
-.glass {
-  background: rgba(20, 20, 20, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 6px;
-  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-}
-.glass:hover {
-  border-color: var(--accent-mid);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+.glass-nav {
+  background: rgba(3, 3, 5, 0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Accent border on hover */
-.card-accent {
-  border-left: 2px solid transparent;
-  transition: border-color 0.2s;
+.bento-card {
+  background: linear-gradient(145deg, rgba(15, 15, 18, 0.7) 0%, rgba(5, 5, 7, 0.8) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.card-accent:hover { border-left-color: var(--accent); }
-
-/* Badge */
-.badge {
-  font-family: var(--font-mono), monospace;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 3px 10px;
-  border-radius: 2px;
-  border: 1px solid var(--accent-mid);
-  background: var(--accent-dim);
-  color: var(--accent);
-  display: inline-block;
+.bento-card:hover {
+  border-color: rgba(129, 140, 248, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.1);
 }
 
-/* Fade-up animation */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+.text-gradient {
+  background: linear-gradient(to right, #e0e7ff, #818cf8, #c084fc);
+  -webkit-background-clip: text;
+  color: transparent;
+  background-clip: text;
 }
-.fade-up {
+
+.reveal {
   opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.2s; }
-.delay-3 { animation-delay: 0.3s; }
-.delay-4 { animation-delay: 0.4s; }
-.delay-5 { animation-delay: 0.5s; }
-.delay-6 { animation-delay: 0.6s; }
-
-/* Section divider */
-.section-divider {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 0;
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
 }
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--dim); border-radius: 3px; }
-
-@media (max-width: 767px) {
-  .portfolio-hero-grid,
-  .portfolio-about-grid,
-  .portfolio-project-grid,
-  .portfolio-writing-card {
-    grid-template-columns: 1fr !important;
-  }
-
-  .portfolio-section-heading {
-    flex-direction: column;
-    gap: 18px;
-  }
-
-  .portfolio-section-heading p {
-    max-width: none !important;
-    text-align: left !important;
-  }
-
-  .desktop-nav {
-    display: none !important;
-  }
-}
-
-@media (min-width: 768px) {
-  .mobile-menu-button {
-    display: none !important;
-  }
-}
+::-webkit-scrollbar-track { background: #030305; }
+::-webkit-scrollbar-thumb { background: #1a1a20; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #33333d; }
