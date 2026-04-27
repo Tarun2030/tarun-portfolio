@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, JetBrains_Mono } from 'next/font/google'
+import { Inter, JetBrains_Mono, Fraunces } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({
@@ -14,10 +14,17 @@ const jetbrainsMono = JetBrains_Mono({
   variable: '--font-mono',
 })
 
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  weight: ['300', '400', '600', '700', '900'],
+  style: ['normal', 'italic'],
+  variable: '--font-serif',
+})
+
 export const metadata: Metadata = {
-  title: 'Tarun Sharma | Engineered Operations',
+  title: 'Tarun Sharma — EA & Builder',
   description:
-    'Merging 4+ years of C-suite executive support with full-stack engineering. Transitioning from manual, cross-border logistics to architecting platforms that automate the grind.',
+    '4+ years of C-suite executive support meets full-stack engineering. Building quiet systems with Next.js, Supabase, and Claude.',
 }
 
 export default function RootLayout({
@@ -26,8 +33,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`scroll-smooth ${inter.variable} ${jetbrainsMono.variable}`}>
-      <body className="antialiased font-sans selection:bg-indigo-500/30 selection:text-indigo-200 relative">
+    <html
+      lang="en"
+      className={`scroll-smooth ${inter.variable} ${jetbrainsMono.variable} ${fraunces.variable}`}
+    >
+      <body className="antialiased font-sans relative">
         {children}
       </body>
     </html>
