@@ -58,7 +58,7 @@ const PROJECTS = [
     name: 'Relay',
     year: '2026',
     status: 'WIP' as const,
-    desc: 'Operating surface for handoffs, reminders, and clear executive follow-through.',
+    desc: "An EA tool I'm building for myself first. Handoffs, reminders, follow-through — the things that fall between every other tool.",
     stack: ['Next.js', 'Supabase', 'Vercel'],
     href: '#',
   },
@@ -66,7 +66,7 @@ const PROJECTS = [
     name: 'Portfolio OS',
     year: '2026',
     status: 'LIVE' as const,
-    desc: 'Personal publishing system for notes, builds, and public experiments.',
+    desc: "Where I document what I'm building and thinking. You're looking at it.",
     stack: ['TypeScript', 'Tailwind', 'Notion'],
     href: '#',
   },
@@ -74,7 +74,7 @@ const PROJECTS = [
     name: 'Audit Arsenal',
     year: '2025',
     status: 'LIVE' as const,
-    desc: 'Prompt-driven kit for finding weak copy, brittle UI states, and unclear workflows.',
+    desc: "A prompt kit for reviewing copy and UI the way an operator would — from the outside, looking for what breaks.",
     stack: ['Claude API', 'n8n', 'Linear'],
     href: '#',
   },
@@ -126,7 +126,7 @@ export default function Home() {
 
           <Reveal>
             <p className="label" style={{ marginBottom: 'var(--space-5)' }}>
-              Executive Assistant · Builder · Hyderabad
+              EA · Builder · Raipur, C.G.
             </p>
           </Reveal>
 
@@ -153,7 +153,7 @@ export default function Home() {
                   letterSpacing: '-0.04em',
                   maxWidth: '9ch',
                 }}>
-                  The EA who ships code.
+                  I build what I wish existed.
                 </h1>
               </div>
             </div>
@@ -161,8 +161,9 @@ export default function Home() {
 
           <Reveal delay={130}>
             <p style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 18, color: 'var(--text-mid)', lineHeight: 1.8, maxWidth: '50ch', marginBottom: 'var(--space-6)' }}>
-              Four years running operations for C-suite executives. Nights spent building
-              software with Next.js, Supabase, and Claude. The instincts from one keep the other honest.
+              I work as an EA at a manufacturing company in Raipur. The job is mostly making sure
+              nothing falls through — calendars, follow-ups, execution at pace. Nights go to building.
+              Right now that means Relay: a tool I&apos;m making because I needed one and couldn&apos;t find it.
             </p>
           </Reveal>
 
@@ -185,7 +186,7 @@ export default function Home() {
               <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--green)', boxShadow: '0 0 8px var(--green)', flexShrink: 0 }} />
               <span className="label" style={{ color: 'var(--text-muted)' }}>Now</span>
               <span style={{ fontFamily: 'var(--font-body)', fontStyle: 'italic', fontSize: 13, color: 'var(--text-mid)' }}>
-                Building Relay · Looking for EA roles · Open to collaboration
+                Building Relay · Open to my next EA role · Raipur → wherever the work is
               </span>
             </div>
           </Reveal>
@@ -258,10 +259,10 @@ export default function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 180px', gap: 'var(--space-7)', alignItems: 'start' }}>
             <Reveal>
               <p style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 16, color: 'var(--text-mid)', lineHeight: 1.85, marginBottom: 'var(--space-4)', maxWidth: '50ch' }}>
-                By day, Tarun manages calendars, correspondence, and operational follow-through for senior executives — the kind of work where precision matters more than speed.
+                I&apos;m an EA at a manufacturing and export company in Raipur. The job is precise by necessity — if something&apos;s unclear, it costs someone time or money. Four years of that teaches you to think in systems before you reach for tools.
               </p>
               <p style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 16, color: 'var(--text-muted)', lineHeight: 1.85, maxWidth: '50ch' }}>
-                By night, he turns those instincts into software. The bias for maintainable structure and closing loops translates well to Next.js, Supabase, and Claude.
+                I&apos;m not a trained engineer. I build what I need and learn what I don&apos;t know. Mostly at night. Mostly alone. Everything here started as a real problem I ran into at work.
               </p>
             </Reveal>
             <Reveal delay={80}>
@@ -269,7 +270,7 @@ export default function Home() {
                 {[
                   ['Role',   'EA + Solo Builder'],
                   ['Stack',  'Next.js / Supabase'],
-                  ['Based',  'Hyderabad, IN'],
+                  ['Based',  'Raipur, C.G.'],
                   ['Status', 'Open to work'],
                 ].map(([k, v], i, arr) => (
                   <div key={k} style={{ paddingBottom: i < arr.length - 1 ? 'var(--space-3)' : 0, marginBottom: i < arr.length - 1 ? 'var(--space-3)' : 0, borderBottom: i < arr.length - 1 ? '1px solid var(--glass-border)' : 'none' }}>
@@ -284,9 +285,9 @@ export default function Home() {
           <Reveal delay={100} style={{ marginTop: 'var(--space-6)' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
               {[
-                { label: 'Support', body: 'Calendar judgment, crisp comms, meeting flow. Signal over noise.' },
-                { label: 'Build',   body: 'Next.js, Supabase, Vercel, Claude-powered automation with intent.' },
-                { label: 'Systems', body: 'Audit prompts, repeatable checklists, workflows that stay useful.' },
+                { label: 'Operations', body: "Making things run smoothly for people who can't afford rough edges. That's the whole job." },
+                { label: 'Building',   body: 'Small, useful software built from real operational friction — not hypothetical user stories.' },
+                { label: 'Systems',   body: 'Thinking in checklists and repeatable flows before reaching for code. That order matters.' },
               ].map(c => (
                 <div key={c.label} className="cap-col">
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 10 }}>{c.label}</div>
@@ -317,7 +318,7 @@ export default function Home() {
               Let&apos;s work.
             </h2>
             <p style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 16, color: 'var(--text-muted)', lineHeight: 1.8, maxWidth: '42ch', marginBottom: 'var(--space-6)' }}>
-              Open to EA roles, consulting, and collaboration on interesting systems. Always happy to talk shop.
+              If you need someone who can run your operations <em>and</em> think about your next tool — or if you just want to talk about what you&apos;re building — I&apos;m easy to reach.
             </p>
             <a href="mailto:mail2tarun.30@gmail.com"
               style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 800, color: 'var(--accent)', textDecoration: 'none', letterSpacing: '-0.02em', display: 'inline-block', marginBottom: 'var(--space-7)', transition: 'color 0.15s' }}
@@ -334,7 +335,7 @@ export default function Home() {
               ))}
             </div>
             <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', opacity: 0.45 }}>
-              Built by Tarun · Next.js · Vercel · 2026
+              Built by me · Next.js · Vercel · 2026
             </p>
           </Reveal>
         </section>

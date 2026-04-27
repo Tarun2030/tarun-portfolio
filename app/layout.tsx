@@ -22,9 +22,9 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Tarun Sharma — EA & Builder',
+  title: 'Tarun Sharma — EA & Builder, Raipur',
   description:
-    '4+ years of C-suite executive support meets full-stack engineering. Building quiet systems with Next.js, Supabase, and Claude.',
+    'EA at a manufacturing company in Raipur. Building tools I wish existed — with Next.js, Supabase, and Claude.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
