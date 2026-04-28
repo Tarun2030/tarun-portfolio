@@ -161,7 +161,7 @@ export default function Home() {
       <main className="main-wrap" style={{ position: 'relative', zIndex: 1, maxWidth: 860, margin: '0 auto', padding: '0 var(--space-6)' }}>
 
         {/* ── Hero ── */}
-        <section id="hero" style={{ paddingTop: 'calc(var(--space-10) + 48px)', paddingBottom: 'var(--space-9)', position: 'relative' }}>
+        <section id="hero" style={{ paddingTop: 'calc(var(--space-10) + 48px)', paddingBottom: '128px', position: 'relative' }}>
 
           {/* Photo — right side, bleeds into bg */}
           <div ref={photoParallax} className="hero-photo" style={{
@@ -195,7 +195,7 @@ export default function Home() {
           {/* Text — sits above photo via z-index */}
           <div ref={heroFade} style={{ position: 'relative', zIndex: 1, willChange: 'transform, opacity' }}>
             <Reveal>
-              <p className="label" style={{ marginBottom: 'var(--space-5)' }}>
+              <p className="label" style={{ marginBottom: 'var(--space-5)', color: 'var(--amber)' }}>
                 EA · Builder · Raipur, C.G.
               </p>
             </Reveal>
@@ -214,13 +214,14 @@ export default function Home() {
                   }} />
                   <h1 style={{
                     position: 'relative',
-                    fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(54px, 9vw, 108px)',
-                    fontWeight: 900,
+                    fontFamily: 'var(--font-body)',
+                    fontStyle: 'italic',
+                    fontSize: 'clamp(68px, 11vw, 144px)',
+                    fontWeight: 300,
                     color: 'var(--text)',
-                    lineHeight: 0.93,
-                    letterSpacing: '-0.04em',
-                    maxWidth: '9ch',
+                    lineHeight: 0.91,
+                    letterSpacing: '-0.025em',
+                    maxWidth: '13ch',
                   }}>
                     I build what I wish existed.
                   </h1>
@@ -250,7 +251,7 @@ export default function Home() {
             {/* Now strip */}
             <Reveal delay={230}>
               <div className="glass-card" style={{ display: 'inline-flex', gap: 'var(--space-4)', alignItems: 'center', padding: '10px 20px', borderRadius: 100 }}>
-                <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--green)', boxShadow: '0 0 8px var(--green)', flexShrink: 0 }} />
+                <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--amber)', boxShadow: '0 0 8px var(--amber)', flexShrink: 0 }} />
                 <span className="label" style={{ color: 'var(--text-muted)' }}>Now</span>
                 <span style={{ fontFamily: 'var(--font-body)', fontStyle: 'italic', fontSize: 13, color: 'var(--text-mid)' }}>
                   Building Relay — Live at myrelay.space · Raipur → wherever the work is
@@ -261,7 +262,7 @@ export default function Home() {
         </section>
 
         {/* ── Writing ── */}
-        <section id="writing" style={{ paddingBottom: 'var(--space-9)' }}>
+        <section id="writing" style={{ paddingBottom: '128px' }}>
           <Reveal>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-6)' }}>
               <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px,4vw,42px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.03em', lineHeight: 1 }}>Writing</h2>
@@ -290,7 +291,7 @@ export default function Home() {
         </section>
 
         {/* ── Work ── */}
-        <section id="work" style={{ paddingBottom: 'var(--space-9)' }}>
+        <section id="work" style={{ paddingBottom: '128px' }}>
           <Reveal>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px,4vw,42px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 'var(--space-6)' }}>Work</h2>
           </Reveal>
@@ -319,7 +320,7 @@ export default function Home() {
         </section>
 
         {/* ── Experience ── */}
-        <section id="experience" style={{ paddingBottom: 'var(--space-9)' }}>
+        <section id="experience" style={{ paddingBottom: '128px' }}>
           <Reveal>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px,4vw,42px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 'var(--space-6)' }}>Experience</h2>
           </Reveal>
@@ -341,7 +342,7 @@ export default function Home() {
         </section>
 
         {/* ── About ── */}
-        <section id="about" style={{ paddingBottom: 'var(--space-9)' }}>
+        <section id="about" style={{ paddingBottom: '128px' }}>
           <Reveal>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px,4vw,42px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 'var(--space-6)' }}>About</h2>
           </Reveal>
@@ -388,7 +389,7 @@ export default function Home() {
         </section>
 
         {/* ── Tools ── */}
-        <section id="tools" style={{ paddingBottom: 'var(--space-9)' }}>
+        <section id="tools" style={{ paddingBottom: '128px' }}>
           <Reveal>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px,4vw,42px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 'var(--space-6)' }}>Tools</h2>
           </Reveal>
@@ -422,7 +423,7 @@ export default function Home() {
         <section id="contact" style={{ paddingBottom: 'var(--space-10)' }}>
           <hr className="rule" style={{ marginBottom: 'var(--space-8)' }} />
           <Reveal>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(48px, 8vw, 96px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.04em', lineHeight: 0.93, marginBottom: 'var(--space-6)', maxWidth: '9ch' }}>
+            <h2 style={{ fontFamily: 'var(--font-body)', fontStyle: 'italic', fontSize: 'clamp(56px, 9vw, 120px)', fontWeight: 300, color: 'var(--text)', letterSpacing: '-0.025em', lineHeight: 0.91, marginBottom: 'var(--space-6)', maxWidth: '10ch' }}>
               Let&apos;s work.
             </h2>
             <p style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 16, color: 'var(--text-muted)', lineHeight: 1.8, maxWidth: '42ch', marginBottom: 'var(--space-6)' }}>

@@ -18,6 +18,11 @@
   --accent-border: oklch(72% 0.18 280 / 0.30);
   --accent-glow:   oklch(72% 0.18 280 / 0.18);
 
+  /* Amber secondary — warm, editorial, non-AI */
+  --amber:         oklch(76% 0.15 65);
+  --amber-dim:     oklch(76% 0.15 65 / 0.12);
+  --amber-border:  oklch(76% 0.15 65 / 0.28);
+
   /* Gold secondary */
   --gold:          oklch(78% 0.13 75);
   --gold-dim:      oklch(78% 0.13 75 / 0.10);
