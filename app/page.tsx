@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Walker from '@/components/Walker'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Hooks
@@ -100,14 +101,36 @@ function CountUp({ to, suffix = '', prefix = '', duration = 1600 }: { to: number
   return <span ref={ref}>{prefix}{val}{suffix}</span>
 }
 
-// Section heading — Darker Grotesque 900, consistent across all sections
+// Section heading — Darker Grotesque 900, with amber level-load bar on entry
 function SectionHeading({ children, id }: { children: React.ReactNode; id?: string }) {
+  const ref    = useRef<HTMLDivElement>(null)
+  const barRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el  = ref.current
+    const bar = barRef.current
+    if (!el || !bar) return
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          el.classList.add('in')
+          bar.classList.add('loaded')
+          obs.disconnect()
+        }
+      },
+      { threshold: 0.1 }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
   return (
-    <Reveal>
-      <h2 id={id} className="t-heading" style={{ fontSize: 'clamp(28px,4vw,42px)', marginBottom: 'var(--space-6)' }}>
+    <div ref={ref} className="reveal" style={{ position: 'relative', paddingBottom: 8, marginBottom: 'var(--space-6)' }}>
+      <h2 id={id} className="t-heading" style={{ fontSize: 'clamp(28px,4vw,42px)' }}>
         {children}
       </h2>
-    </Reveal>
+      <div ref={barRef} className="level-load-bar" />
+    </div>
   )
 }
 
@@ -228,8 +251,9 @@ export default function Home() {
       <div className="scroll-progress" aria-hidden />
       <div className="bg-mesh" aria-hidden><div className="bg-mesh-bottom" /></div>
       <Nav />
+      <Walker />
 
-      <main className="main-wrap" style={{ position: 'relative', zIndex: 1, maxWidth: 860, margin: '0 auto', padding: '0 var(--space-6)' }}>
+      <main className="main-wrap" style={{ position: 'relative', zIndex: 1, maxWidth: 860, margin: '0 auto', padding: '0 var(--space-6)', paddingBottom: 100 }}>
 
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
         <section id="hero" style={{ paddingTop: 'calc(var(--space-10) + 48px)', paddingBottom: '128px', position: 'relative' }}>
@@ -242,7 +266,7 @@ export default function Home() {
           }}>
             <img src="/tarun.jpg" alt="" style={{
               width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block',
-              filter: 'grayscale(18%) contrast(1.06) brightness(0.88)',
+              filter: 'grayscale(12%) contrast(1.04) brightness(1.0)',
               maskImage: 'linear-gradient(to left, transparent 0%, black 35%), linear-gradient(to top, transparent 0%, black 28%)',
               WebkitMaskImage: 'linear-gradient(to left, transparent 0%, black 35%), linear-gradient(to top, transparent 0%, black 28%)',
               maskComposite: 'intersect', WebkitMaskComposite: 'source-in',
@@ -263,7 +287,7 @@ export default function Home() {
                 <div style={{ position: 'relative' }}>
                   <div style={{
                     position: 'absolute', inset: '-20px -40px',
-                    background: 'radial-gradient(ellipse, oklch(72% 0.18 280 / 0.14) 0%, transparent 70%)',
+                    background: 'radial-gradient(ellipse, oklch(58% 0.16 65 / 0.18) 0%, transparent 70%)',
                     filter: 'blur(24px)', pointerEvents: 'none',
                   }} />
                   <h1 className="t-display" style={{ position: 'relative', fontSize: 'clamp(68px, 11vw, 144px)', maxWidth: '13ch' }}>

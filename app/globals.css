@@ -4,39 +4,41 @@
 
 /* ── Tokens ──────────────────────────────────────────────────────────────── */
 :root {
-  --bg:            oklch(7% 0.012 280);
-  --surface:       oklch(11% 0.012 280);
+  /* Warm cream paper */
+  --bg:            oklch(97.5% 0.012 85);
+  --surface:       oklch(94.5% 0.014 85);
 
-  --text:          oklch(94% 0.006 280);
-  --text-mid:      oklch(68% 0.008 280);
-  --text-muted:    oklch(46% 0.006 280);
+  /* Near-black ink with violet undertone */
+  --text:          oklch(22% 0.020 280);
+  --text-mid:      oklch(44% 0.018 280);
+  --text-muted:    oklch(58% 0.012 280);
 
-  /* Violet accent */
-  --accent:        oklch(72% 0.18 280);
-  --accent-hi:     oklch(80% 0.18 280);
-  --accent-dim:    oklch(72% 0.18 280 / 0.10);
-  --accent-border: oklch(72% 0.18 280 / 0.30);
-  --accent-glow:   oklch(72% 0.18 280 / 0.18);
+  /* Deep violet accent — darkened for cream contrast */
+  --accent:        oklch(48% 0.20 280);
+  --accent-hi:     oklch(40% 0.22 280);
+  --accent-dim:    oklch(48% 0.20 280 / 0.08);
+  --accent-border: oklch(48% 0.20 280 / 0.28);
+  --accent-glow:   oklch(48% 0.20 280 / 0.14);
 
-  /* Amber secondary */
-  --amber:         oklch(76% 0.15 65);
-  --amber-dim:     oklch(76% 0.15 65 / 0.12);
-  --amber-border:  oklch(76% 0.15 65 / 0.28);
+  /* Amber secondary — darkened for cream readability */
+  --amber:         oklch(58% 0.16 65);
+  --amber-dim:     oklch(58% 0.16 65 / 0.10);
+  --amber-border:  oklch(58% 0.16 65 / 0.30);
 
   /* Gold secondary */
-  --gold:          oklch(78% 0.13 75);
-  --gold-dim:      oklch(78% 0.13 75 / 0.10);
+  --gold:          oklch(62% 0.13 75);
+  --gold-dim:      oklch(62% 0.13 75 / 0.10);
 
-  /* Glass */
-  --glass-bg:      oklch(100% 0 0 / 0.035);
-  --glass-bg-hi:   oklch(100% 0 0 / 0.065);
-  --glass-border:  oklch(100% 0 0 / 0.10);
-  --glass-border-hi: oklch(100% 0 0 / 0.18);
+  /* Glass — dark overlays on light bg */
+  --glass-bg:      oklch(22% 0.02 280 / 0.035);
+  --glass-bg-hi:   oklch(22% 0.02 280 / 0.065);
+  --glass-border:  oklch(22% 0.02 280 / 0.10);
+  --glass-border-hi: oklch(22% 0.02 280 / 0.18);
 
   /* Status */
-  --green:         oklch(74% 0.14 152);
-  --green-dim:     oklch(74% 0.14 152 / 0.08);
-  --green-border:  oklch(74% 0.14 152 / 0.28);
+  --green:         oklch(52% 0.16 152);
+  --green-dim:     oklch(52% 0.16 152 / 0.08);
+  --green-border:  oklch(52% 0.16 152 / 0.30);
 
   /* Space */
   --space-1:  4px;
@@ -292,8 +294,8 @@ body {
   left: -10%;
   width: 70%;
   height: 70%;
-  background: radial-gradient(ellipse, oklch(50% 0.22 280 / 0.18) 0%, transparent 70%);
-  filter: blur(60px);
+  background: radial-gradient(ellipse, oklch(72% 0.14 65 / 0.18) 0%, transparent 70%);
+  filter: blur(70px);
 }
 .bg-mesh::after {
   content: '';
@@ -302,8 +304,8 @@ body {
   right: -15%;
   width: 55%;
   height: 55%;
-  background: radial-gradient(ellipse, oklch(52% 0.20 220 / 0.12) 0%, transparent 70%);
-  filter: blur(80px);
+  background: radial-gradient(ellipse, oklch(70% 0.12 35 / 0.14) 0%, transparent 70%);
+  filter: blur(90px);
 }
 .bg-mesh-bottom {
   position: absolute;
@@ -311,8 +313,8 @@ body {
   left: 30%;
   width: 50%;
   height: 50%;
-  background: radial-gradient(ellipse, oklch(55% 0.18 310 / 0.10) 0%, transparent 70%);
-  filter: blur(80px);
+  background: radial-gradient(ellipse, oklch(68% 0.14 290 / 0.10) 0%, transparent 70%);
+  filter: blur(90px);
 }
 
 /* ── Floating centered pill nav ──────────────────────────────────────────── */
@@ -328,11 +330,14 @@ body {
   height: 48px;
   padding: 0 var(--space-5);
   border-radius: 100px;
-  background: oklch(8% 0.014 280 / 0.75);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background: oklch(99% 0.006 85 / 0.78);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
   border: 1px solid var(--glass-border-hi);
-  box-shadow: 0 4px 32px oklch(72% 0.18 280 / 0.08), inset 0 1px 0 oklch(100% 0 0 / 0.06);
+  box-shadow:
+    0 1px 0 oklch(100% 0 0 / 0.6) inset,
+    0 4px 24px oklch(22% 0.02 280 / 0.08),
+    0 12px 40px oklch(48% 0.20 280 / 0.06);
   white-space: nowrap;
 }
 
@@ -352,7 +357,7 @@ body {
 .glass-card:hover {
   background: var(--glass-bg-hi);
   border-color: var(--accent-border);
-  box-shadow: 0 16px 48px -12px var(--accent-glow), inset 0 1px 0 oklch(100% 0 0 / 0.08);
+  box-shadow: 0 16px 48px -12px var(--accent-glow), 0 1px 0 oklch(22% 0.02 280 / 0.04) inset;
   transform: perspective(800px) rotateX(-2deg) translateY(-4px);
 }
 
@@ -560,4 +565,84 @@ body {
 /* ── Scrollbar ───────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: oklch(20% 0.02 280); border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: oklch(75% 0.02 280); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: oklch(60% 0.04 280); }
+
+/* ── Ground strip (walker stage) ─────────────────────────────────────────── */
+.ground-strip {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 84px;
+  z-index: 100;
+  pointer-events: none;
+}
+.ground-line {
+  position: absolute;
+  bottom: 54px; left: 0; right: 0;
+  height: 1px;
+  background: var(--accent-border);
+  opacity: 0.5;
+}
+.walker-char {
+  position: absolute;
+  bottom: 54px;
+  transition: left 0.12s linear;
+  transform-origin: center bottom;
+}
+.walker-char svg {
+  display: block;
+  filter: drop-shadow(0 3px 8px var(--accent-glow));
+}
+
+/* Walker state animations */
+.walker-char[data-state="walking"] .walker-leg-l { animation: wlk-l 0.48s ease-in-out infinite; }
+.walker-char[data-state="walking"] .walker-leg-r { animation: wlk-r 0.48s ease-in-out infinite; }
+.walker-char[data-state="walking"] .walker-arm-l { animation: wlk-arm-l 0.48s ease-in-out infinite; }
+.walker-char[data-state="walking"] .walker-arm-r { animation: wlk-arm-r 0.48s ease-in-out infinite; }
+
+.walker-char[data-state="running"] .walker-leg-l { animation: run-l 0.24s ease-in-out infinite; }
+.walker-char[data-state="running"] .walker-leg-r { animation: run-r 0.24s ease-in-out infinite; }
+.walker-char[data-state="running"] .walker-arm-l { animation: run-arm-l 0.24s ease-in-out infinite; }
+.walker-char[data-state="running"] .walker-arm-r { animation: run-arm-r 0.24s ease-in-out infinite; }
+
+.walker-char[data-state="idle"] svg   { animation: w-breathe 2.4s ease-in-out infinite; transform-origin: center bottom; }
+.walker-char[data-state="waving"] .walker-arm-r { animation: w-wave 0.55s ease-in-out 3; }
+
+/* Walk keyframes */
+@keyframes wlk-l      { 0%,100% { transform: rotate(22deg); }  50% { transform: rotate(-22deg); } }
+@keyframes wlk-r      { 0%,100% { transform: rotate(-22deg); } 50% { transform: rotate(22deg); } }
+@keyframes wlk-arm-l  { 0%,100% { transform: rotate(-18deg); } 50% { transform: rotate(18deg); } }
+@keyframes wlk-arm-r  { 0%,100% { transform: rotate(18deg); }  50% { transform: rotate(-18deg); } }
+
+/* Run keyframes — wider swing */
+@keyframes run-l      { 0%,100% { transform: rotate(32deg); }  50% { transform: rotate(-32deg); } }
+@keyframes run-r      { 0%,100% { transform: rotate(-32deg); } 50% { transform: rotate(32deg); } }
+@keyframes run-arm-l  { 0%,100% { transform: rotate(-28deg); } 50% { transform: rotate(28deg); } }
+@keyframes run-arm-r  { 0%,100% { transform: rotate(28deg); }  50% { transform: rotate(-28deg); } }
+
+/* Idle breathe */
+@keyframes w-breathe  { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(0.96); } }
+
+/* Wave arm */
+@keyframes w-wave {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(-65deg); }
+  45%  { transform: rotate(-45deg); }
+  65%  { transform: rotate(-65deg); }
+  85%  { transform: rotate(-45deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* ── Level load bar (section headings) ───────────────────────────────────── */
+.level-load-bar {
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--amber);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.65s 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: 1px;
+}
+.level-load-bar.loaded { transform: scaleX(1); }
