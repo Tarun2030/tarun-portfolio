@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import ProjectCard from '@/components/ProjectCard'
+import TransitionLink from '@/components/TransitionLink'
 // ─────────────────────────────────────────────────────────────────────────────
 // Components
 // ─────────────────────────────────────────────────────────────────────────────
@@ -277,24 +279,7 @@ export default function Home() {
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {PROJECTS.map((p, i) => (
               <Reveal key={p.name} delay={i * 80}>
-                <a href={p.href} className="project-card">
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
-                    <div>
-                      <div className="t-heading" style={{ fontSize: 21, marginBottom: 3 }}>{p.name}</div>
-                      <div className="t-label" style={{ color: 'var(--text-muted)' }}>{p.year}</div>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <span className="card-arrow t-body" style={{ fontSize: 18 }}>→</span>
-                      <span className={`badge badge-${p.status.toLowerCase()}`}>{p.status}</span>
-                    </div>
-                  </div>
-                  <p className="t-body" style={{ fontSize: 13, color: 'var(--text-mid)', flex: 1, marginBottom: 16 }}>{p.desc}</p>
-                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                    {p.stack.map(s => (
-                      <span key={s} className="t-label stack-tag">{s}</span>
-                    ))}
-                  </div>
-                </a>
+                <ProjectCard p={p} />
               </Reveal>
             ))}
           </div>

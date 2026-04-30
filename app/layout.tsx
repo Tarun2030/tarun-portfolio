@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Darker_Grotesque, Literata, JetBrains_Mono } from 'next/font/google'
 import Cursor from '@/components/Cursor'
+import PageTransition from '@/components/PageTransition'
 import './globals.css'
 
 const darkerGrotesque = Darker_Grotesque({
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body className="antialiased">
         <Cursor />
+        <PageTransition />
         {children}
       </body>
     </html>
