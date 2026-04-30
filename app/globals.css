@@ -582,7 +582,7 @@ body {
 
 /* ── Custom cursor ───────────────────────────────────────────────────────── */
 @media (pointer: fine) {
-  /* Scope cursor:none precisely — preserves text caret in inputs */
+  /* Scoped — preserves text caret in inputs/textareas */
   body, a, button, [role="button"],
   h1, h2, h3, h4, h5, h6,
   p, span, div, li, section, article, nav, main, aside, header, footer {
@@ -595,22 +595,21 @@ body {
     position: fixed;
     top: 0; left: 0;
     pointer-events: none;
+    /* Hidden until cursor-active; JS drives all position/size/opacity updates */
     opacity: 0;
     will-change: transform;
     transition: opacity var(--dur-base) ease;
   }
 
-  /* Visible only after first mousemove */
-  html.cursor-active .c-dot { opacity: 1; }
+  /* Fade in on first mousemove — JS adds cursor-active to <html> */
+  html.cursor-active .c-dot  { opacity: 1; }
   html.cursor-active .c-ring { opacity: 0.38; }
 
-  /* translate3d positions via CSS vars; translate(-50%,-50%) centers the element */
   .c-dot {
     width: 6px; height: 6px;
     background: var(--ink);
     border-radius: 50%;
     z-index: 9999;
-    transform: translate3d(var(--cursor-x, -200px), var(--cursor-y, -200px), 0) translate(-50%, -50%);
   }
 
   .c-ring {
@@ -618,16 +617,7 @@ body {
     border: 1.5px solid var(--ink);
     border-radius: 50%;
     z-index: 9998;
-    transform: translate3d(var(--cursor-rx, -200px), var(--cursor-ry, -200px), 0) translate(-50%, -50%);
-    transition:
-      opacity   var(--dur-base) ease,
-      width     var(--dur-base) var(--ease-out),
-      height    var(--dur-base) var(--ease-out);
-  }
-
-  html.cursor-active .c-ring[data-hover] {
-    width: 66px; height: 66px;
-    opacity: 0.15;
+    /* JS lerps size and opacity directly via style — no CSS transitions on those */
   }
 }
 
