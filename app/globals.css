@@ -597,17 +597,15 @@ html.has-cursor select { cursor: text !important; }
   z-index: 2147483647;
   opacity: 0;
   transition: opacity 0.2s ease;
-  /* difference blend makes it visible on any bg — white inverts to black on white */
-  mix-blend-mode: difference;
 }
 .c-dot {
   width: 5px; height: 5px;
-  background: #fff;
+  background: var(--ink);
   border-radius: 50%;
 }
 .c-ring {
   width: 36px; height: 36px;
-  border: 1.5px solid #fff;
+  border: 1.5px solid var(--ink);
   border-radius: 50%;
 }
 
