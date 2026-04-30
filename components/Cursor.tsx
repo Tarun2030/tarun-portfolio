@@ -1,100 +1,69 @@
 'use client'
-
 import { useEffect, useRef } from 'react'
-
-const DOT_SIZE   = 6
-const RING_BASE  = 38
-const RING_HOVER = 66
 
 export default function Cursor() {
   const dot  = useRef<HTMLDivElement>(null)
   const ring = useRef<HTMLDivElement>(null)
 
-  // Mouse position (instant)
-  const mx = useRef(0)
-  const my = useRef(0)
-  // Ring position (lerped)
-  const rx = useRef(0)
-  const ry = useRef(0)
-  // Ring size (lerped for smooth hover expand)
-  const rs = useRef(RING_BASE)
-
-  const isHover   = useRef(false)
-  const activated = useRef(false)
-  const raf       = useRef<number>()
-
   useEffect(() => {
-    const move = (e: MouseEvent) => {
-      mx.current = e.clientX
-      my.current = e.clientY
+    if (!window.matchMedia('(pointer: fine)').matches) return
 
-      if (!activated.current) {
-        activated.current = true
-        // Jump ring to mouse immediately so it doesn't sweep from (0,0)
-        rx.current = e.clientX
-        ry.current = e.clientY
-        document.documentElement.classList.add('cursor-active')
-      }
+    let mx = -100, my = -100
+    let rx = -100, ry = -100
+    let rs = 36
+    let hover = false
+    let raf = 0
+
+    const move  = (e: MouseEvent) => { mx = e.clientX; my = e.clientY }
+    const over  = (e: Event) => {
+      hover = !!(e.target as Element).closest?.('a, button, [role="button"]')
     }
-
-    const leave = () =>
-      document.documentElement.classList.remove('cursor-active')
-
-    const over = (e: PointerEvent) => {
-      if ((e.target as Element).closest('a, button, [role="button"]'))
-        isHover.current = true
+    const show  = () => {
+      if (dot.current)  dot.current.style.opacity  = '1'
+      if (ring.current) ring.current.style.opacity = '1'
     }
-    const out = (e: PointerEvent) => {
-      if ((e.target as Element).closest('a, button, [role="button"]'))
-        isHover.current = false
+    const hide  = () => {
+      if (dot.current)  dot.current.style.opacity  = '0'
+      if (ring.current) ring.current.style.opacity = '0'
     }
 
     const tick = () => {
-      // Lerp ring position
-      rx.current += (mx.current - rx.current) * 0.11
-      ry.current += (my.current - ry.current) * 0.11
-
-      // Lerp ring size (smooth expand/contract on hover)
-      const targetSize = isHover.current ? RING_HOVER : RING_BASE
-      rs.current += (targetSize - rs.current) * 0.15
-
-      const halfDot  = DOT_SIZE / 2
-      const halfRing = rs.current / 2
+      rx += (mx - rx) * 0.1
+      ry += (my - ry) * 0.1
+      rs += ((hover ? 60 : 36) - rs) * 0.18
 
       if (dot.current)
-        dot.current.style.transform =
-          `translate(${mx.current - halfDot}px, ${my.current - halfDot}px)`
+        dot.current.style.transform = `translate3d(${mx - 2.5}px,${my - 2.5}px,0)`
 
       if (ring.current) {
-        ring.current.style.width     = `${rs.current}px`
-        ring.current.style.height    = `${rs.current}px`
-        ring.current.style.transform =
-          `translate(${rx.current - halfRing}px, ${ry.current - halfRing}px)`
-        ring.current.style.opacity   = isHover.current ? '0.15' : '0.38'
+        ring.current.style.width     = `${rs}px`
+        ring.current.style.height    = `${rs}px`
+        ring.current.style.transform = `translate3d(${rx - rs / 2}px,${ry - rs / 2}px,0)`
       }
-
-      raf.current = requestAnimationFrame(tick)
+      raf = requestAnimationFrame(tick)
     }
 
-    window.addEventListener('mousemove', move)
-    document.addEventListener('mouseleave', leave)
-    document.addEventListener('pointerover', over as EventListener)
-    document.addEventListener('pointerout',  out  as EventListener)
-    raf.current = requestAnimationFrame(tick)
+    document.documentElement.classList.add('has-cursor')
+    window.addEventListener('mousemove',   move,  { passive: true })
+    window.addEventListener('mouseover',   over,  { passive: true })
+    document.addEventListener('mouseenter', show)
+    document.addEventListener('mouseleave', hide)
+    raf = requestAnimationFrame(tick)
 
     return () => {
-      window.removeEventListener('mousemove', move)
-      document.removeEventListener('mouseleave', leave)
-      document.removeEventListener('pointerover', over as EventListener)
-      document.removeEventListener('pointerout',  out  as EventListener)
-      cancelAnimationFrame(raf.current!)
+      cancelAnimationFrame(raf)
+      window.removeEventListener('mousemove',   move)
+      window.removeEventListener('mouseover',   over)
+      document.removeEventListener('mouseenter', show)
+      document.removeEventListener('mouseleave', hide)
+      document.documentElement.classList.remove('has-cursor')
     }
   }, [])
 
   return (
     <>
-      <div ref={dot}  className="c-dot"  aria-hidden />
-      <div ref={ring} className="c-ring" aria-hidden />
+      <div ref={dot}  className="c-dot"  aria-hidden="true" />
+      <div ref={ring} className="c-ring" aria-hidden="true" />
     </>
   )
 }
