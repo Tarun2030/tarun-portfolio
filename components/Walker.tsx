@@ -74,38 +74,38 @@ export default function Walker() {
 
 function WalkerSVG() {
   return (
-    <svg viewBox="0 0 32 50" width="36" height="50" style={{ overflow: 'visible' }}>
+    <svg viewBox="0 0 32 50" width="36" height="50" style={{ overflow: 'visible', color: 'var(--ink)' }}>
       {/* Ground shadow */}
-      <ellipse cx="16" cy="50" rx="10" ry="2.5" fill="var(--accent)" opacity="0.12" />
+      <ellipse cx="16" cy="50" rx="10" ry="2.5" fill="var(--ink)" opacity="0.12" />
 
       {/* Left leg — pivots from top-center of leg */}
       <g className="walker-leg-l" style={{ transformOrigin: '13px 33px' }}>
-        <rect x="10" y="33" width="6" height="14" rx="3" fill="var(--accent)" />
+        <rect x="10" y="33" width="6" height="14" rx="3" fill="var(--ink)" />
       </g>
 
       {/* Right leg */}
       <g className="walker-leg-r" style={{ transformOrigin: '19px 33px' }}>
-        <rect x="16" y="33" width="6" height="14" rx="3" fill="var(--accent)" />
+        <rect x="16" y="33" width="6" height="14" rx="3" fill="var(--ink)" />
       </g>
 
       {/* Left arm — pivots from shoulder */}
       <g className="walker-arm-l" style={{ transformOrigin: '7px 20px' }}>
-        <rect x="3" y="20" width="5" height="12" rx="2.5" fill="var(--accent)" />
+        <rect x="3" y="20" width="5" height="12" rx="2.5" fill="var(--ink)" />
       </g>
 
       {/* Right arm */}
       <g className="walker-arm-r" style={{ transformOrigin: '25px 20px' }}>
-        <rect x="24" y="20" width="5" height="12" rx="2.5" fill="var(--accent)" />
+        <rect x="24" y="20" width="5" height="12" rx="2.5" fill="var(--ink)" />
       </g>
 
       {/* Torso */}
-      <rect x="9" y="18" width="14" height="17" rx="4" fill="var(--accent)" />
+      <rect x="9" y="18" width="14" height="17" rx="4" fill="var(--ink)" />
 
       {/* Amber scarf */}
       <rect x="9" y="17" width="14" height="5" rx="2.5" fill="var(--amber)" />
 
       {/* Head */}
-      <circle cx="16" cy="10" r="9" fill="var(--accent)" />
+      <circle cx="16" cy="10" r="9" fill="var(--ink)" />
 
       {/* Eyes */}
       <circle cx="12.5" cy="9"  r="1.5" fill="var(--bg)" />

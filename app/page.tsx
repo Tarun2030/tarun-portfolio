@@ -4,60 +4,6 @@ import { useEffect, useRef, useState } from 'react'
 import Walker from '@/components/Walker'
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Hooks
-// ─────────────────────────────────────────────────────────────────────────────
-
-function useScrollParallax(factor = 0.15) {
-  const ref = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    let raf: number
-    const tick = () => {
-      if (ref.current) ref.current.style.transform = `translateY(${window.scrollY * factor}px)`
-    }
-    const onScroll = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(tick) }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(raf) }
-  }, [factor])
-  return ref
-}
-
-function useHeroScroll() {
-  const ref = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    let raf: number
-    const tick = () => {
-      if (!ref.current) return
-      const p = Math.min(window.scrollY / 520, 1)
-      ref.current.style.opacity = String(1 - p * 0.6)
-      ref.current.style.transform = `translateY(${p * -36}px)`
-    }
-    const onScroll = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(tick) }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(raf) }
-  }, [])
-  return ref
-}
-
-function useTilt(strength = 10) {
-  const ref = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const onMove = (e: MouseEvent) => {
-      const r = el.getBoundingClientRect()
-      const x = (e.clientX - r.left) / r.width - 0.5
-      const y = (e.clientY - r.top)  / r.height - 0.5
-      el.style.transform = `perspective(900px) rotateY(${x * strength}deg) rotateX(${-y * strength}deg) translateZ(10px)`
-    }
-    const onLeave = () => { el.style.transform = '' }
-    el.addEventListener('mousemove', onMove)
-    el.addEventListener('mouseleave', onLeave)
-    return () => { el.removeEventListener('mousemove', onMove); el.removeEventListener('mouseleave', onLeave) }
-  }, [strength])
-  return ref
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
 // Components
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -216,23 +162,17 @@ const SOFT_SKILLS = ['Executive Support', 'Ops Design', 'Stakeholder Management'
 
 function Nav() {
   return (
-    <nav className="nav">
-      <a href="#hero" className="t-heading" style={{ fontSize: 16, color: 'var(--text)', textDecoration: 'none', marginRight: 8 }}>
-        TS
-      </a>
-      <span className="nav-divider" style={{ width: 1, height: 20, background: 'var(--glass-border-hi)', display: 'inline-block' }} />
-      {['Writing', 'Work', 'About'].map(l => (
-        <a key={l} href={`#${l.toLowerCase()}`} className="nav-links t-label"
-          style={{ color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.15s' }}
-          onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = 'var(--text)')}
-          onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'var(--text-muted)')}
-        >{l}</a>
-      ))}
-      <a href="#contact" className="t-label"
-        style={{ color: 'var(--bg)', background: 'var(--accent)', padding: '7px 16px', borderRadius: 100, textDecoration: 'none', transition: 'opacity 0.15s' }}
-        onMouseEnter={e => ((e.currentTarget as HTMLElement).style.opacity = '0.85')}
-        onMouseLeave={e => ((e.currentTarget as HTMLElement).style.opacity = '1')}
-      >Get in touch</a>
+    <nav className="nav-bar">
+      <a href="#hero" className="nav-mark">TS</a>
+      <div className="nav-links-wrap">
+        {['Work', 'Writing', 'About'].map(l => (
+          <a key={l} href={`#${l.toLowerCase()}`} className="nav-link">
+            <span className="nav-dot" aria-hidden />
+            {l}
+          </a>
+        ))}
+        <a href="#contact" className="nav-link nav-cta">Get in touch</a>
+      </div>
     </nav>
   )
 }
@@ -242,24 +182,19 @@ function Nav() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function Home() {
-  const heroTilt      = useTilt(7)
-  const photoParallax = useScrollParallax(0.12)
-  const heroFade      = useHeroScroll()
-
   return (
     <>
       <div className="scroll-progress" aria-hidden />
-      <div className="bg-mesh" aria-hidden><div className="bg-mesh-bottom" /></div>
       <Nav />
       <Walker />
 
-      <main className="main-wrap" style={{ position: 'relative', zIndex: 1, maxWidth: 860, margin: '0 auto', padding: '0 var(--space-6)', paddingBottom: 100 }}>
+      <main className="main-wrap" style={{ paddingBottom: 100 }}>
 
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
         <section id="hero" style={{ paddingTop: 'calc(var(--space-10) + 48px)', paddingBottom: '128px', position: 'relative' }}>
 
           {/* Photo */}
-          <div ref={photoParallax} className="hero-photo" style={{
+          <div className="hero-photo" style={{
             position: 'absolute', top: 'calc(var(--space-10) + 20px)', right: '-40px',
             width: 'clamp(240px, 36vw, 420px)', height: 'clamp(300px, 48vw, 560px)',
             pointerEvents: 'none', zIndex: 0,
@@ -270,12 +205,16 @@ export default function Home() {
               maskImage: 'linear-gradient(to left, transparent 0%, black 35%), linear-gradient(to top, transparent 0%, black 28%)',
               WebkitMaskImage: 'linear-gradient(to left, transparent 0%, black 35%), linear-gradient(to top, transparent 0%, black 28%)',
               maskComposite: 'intersect', WebkitMaskComposite: 'source-in',
-              animation: 'hero-float 5s ease-in-out infinite',
             }} />
           </div>
 
+          {/* Floating brand mark */}
+          <div className="brand-mark" aria-hidden>
+            <span className="t-display" style={{ fontSize: 'clamp(120px, 20vw, 280px)' }}>TS</span>
+          </div>
+
           {/* Text */}
-          <div ref={heroFade} style={{ position: 'relative', zIndex: 1, willChange: 'transform, opacity' }}>
+          <div className="hero-content">
             <Reveal>
               <p className="t-label" style={{ marginBottom: 'var(--space-5)', color: 'var(--amber)' }}>
                 EA · Builder · Raipur, C.G.
@@ -283,17 +222,10 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={60}>
-              <div ref={heroTilt} style={{ display: 'inline-block', transition: 'transform 0.2s cubic-bezier(0.16,1,0.3,1)', willChange: 'transform', marginBottom: 'var(--space-6)' }}>
-                <div style={{ position: 'relative' }}>
-                  <div style={{
-                    position: 'absolute', inset: '-20px -40px',
-                    background: 'radial-gradient(ellipse, oklch(58% 0.16 65 / 0.18) 0%, transparent 70%)',
-                    filter: 'blur(24px)', pointerEvents: 'none',
-                  }} />
-                  <h1 className="t-display" style={{ position: 'relative', fontSize: 'clamp(68px, 11vw, 144px)', maxWidth: '13ch' }}>
-                    I build what I wish existed.
-                  </h1>
-                </div>
+              <div style={{ marginBottom: 'var(--space-6)' }}>
+                <h1 className="t-display" style={{ fontSize: 'clamp(80px, 12vw, 160px)', maxWidth: '13ch' }}>
+                  I build what I wish existed.
+                </h1>
               </div>
             </Reveal>
 
@@ -345,10 +277,10 @@ export default function Home() {
             <SectionHeading>Work</SectionHeading>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 14, alignItems: 'stretch' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             {PROJECTS.map((p, i) => (
-              <Reveal key={p.name} delay={i * 80} style={{ display: 'flex' }}>
-                <a href={p.href} className="project-card" style={{ display: 'flex', flexDirection: 'column', textDecoration: 'none', flex: 1 }}>
+              <Reveal key={p.name} delay={i * 80}>
+                <a href={p.href} className="project-card">
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
                     <div>
                       <div className="t-heading" style={{ fontSize: 20, marginBottom: 3 }}>{p.name}</div>
@@ -391,10 +323,7 @@ export default function Home() {
         <section id="writing" style={{ paddingBottom: '128px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-6)' }}>
             <SectionHeading>Writing</SectionHeading>
-            <a href="#" className="t-label" style={{ color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.15s' }}
-              onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = 'var(--accent)')}
-              onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'var(--text-muted)')}
-            >All posts →</a>
+            <a href="#" className="t-label rest-dim" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>All posts →</a>
           </div>
 
           {POSTS.map((post, i) => (
@@ -518,17 +447,13 @@ export default function Home() {
             <p className="t-body" style={{ fontSize: 16, color: 'var(--text-muted)', maxWidth: '42ch', marginBottom: 'var(--space-6)' }}>
               If you need someone who can run your operations <em>and</em> think about your next tool — or if you just want to talk about what you&apos;re building — I&apos;m easy to reach.
             </p>
-            <a href="mailto:mail2tarun.30@gmail.com" className="t-heading"
-              style={{ fontSize: 22, color: 'var(--accent)', textDecoration: 'none', display: 'inline-block', marginBottom: 'var(--space-7)', transition: 'color 0.15s' }}
-              onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = 'var(--accent-hi)')}
-              onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'var(--accent)')}
+            <a href="mailto:mail2tarun.30@gmail.com" className="t-heading rest-dim"
+              style={{ fontSize: 22, color: 'var(--ink)', textDecoration: 'none', display: 'inline-block', marginBottom: 'var(--space-7)' }}
             >mail2tarun.30@gmail.com</a>
             <div style={{ display: 'flex', gap: 'var(--space-6)', marginBottom: 'var(--space-8)' }}>
               {[{ label: 'X / Twitter', href: 'https://x.com/' }, { label: 'GitHub', href: 'https://github.com/Tarun2030' }, { label: 'LinkedIn', href: 'https://linkedin.com/in/' }].map(s => (
-                <a key={s.label} href={s.href} className="t-label"
-                  style={{ color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.15s' }}
-                  onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = 'var(--accent)')}
-                  onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'var(--text-muted)')}
+                <a key={s.label} href={s.href} className="t-label rest-dim"
+                  style={{ color: 'var(--ink)', textDecoration: 'none' }}
                 >{s.label}</a>
               ))}
             </div>
