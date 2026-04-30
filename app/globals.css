@@ -4,9 +4,9 @@
 
 /* ── Tokens ──────────────────────────────────────────────────────────────── */
 :root {
-  /* Warm cream paper */
-  --bg:            oklch(97.5% 0.012 85);
-  --surface:       oklch(94.5% 0.014 85);
+  /* Near-pure white — hellomonday-grade */
+  --bg:            oklch(99.5% 0.003 80);
+  --surface:       oklch(97.5% 0.005 80);
 
   /* Near-black ink */
   --text:          oklch(22% 0.020 280);
@@ -64,6 +64,11 @@
 
 html { scroll-behavior: smooth; }
 
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 body {
   background-color: var(--bg);
   color: var(--text);
@@ -71,6 +76,7 @@ body {
   font-weight: 300;
   overflow-x: hidden;
   line-height: 1.65;
+  animation: page-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 ::selection {
@@ -80,13 +86,13 @@ body {
 
 /* ── Typography roles ────────────────────────────────────────────────────── */
 .t-display {
-  font-family: var(--font-body);
-  font-weight: 300;
-  font-style: italic;
-  letter-spacing: -0.035em;
-  line-height: 0.88;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: normal;
+  letter-spacing: -0.045em;
+  line-height: 0.87;
   color: var(--text);
-  font-feature-settings: "onum" 1, "kern" 1, "liga" 1;
+  font-feature-settings: "kern" 1, "liga" 1, "ss01" 1;
 }
 
 .t-heading {
@@ -215,11 +221,23 @@ body {
   background: transparent;
   border-radius: 0;
   text-decoration: none;
-  opacity: 0.6;
-  transition: opacity 0.25s ease;
+  opacity: 0.55;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .project-card:last-of-type { border-bottom: 1px solid var(--rule); }
 .project-card:hover { opacity: 1; }
+
+/* Animated right-arrow on card hover */
+.project-card .card-arrow {
+  display: inline-block;
+  transform: translateX(0);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+}
+.project-card:hover .card-arrow {
+  transform: translateX(6px);
+  opacity: 1;
+}
 
 /* ── Stack tag ───────────────────────────────────────────────────────────── */
 .stack-tag {
@@ -311,18 +329,34 @@ body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink);
-  opacity: 0.5;
+  opacity: 0.45;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: opacity 0.2s ease;
+  position: relative;
+  padding-bottom: 2px;
+  transition: opacity 0.25s ease;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0;
+  width: 100%; height: 1px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .nav-link:hover { opacity: 1; }
+.nav-link:hover::after { transform: scaleX(1); }
+
+/* suppress underline on CTA since it has a border */
+.nav-cta::after { display: none; }
 
 .nav-dot {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: var(--ink);
   opacity: 0;
@@ -358,8 +392,8 @@ body {
   padding: var(--space-5) 0;
   border-top: 1px solid var(--rule);
   text-decoration: none;
-  opacity: 0.6;
-  transition: opacity 0.2s ease;
+  opacity: 0.5;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
 .post-row:last-of-type { border-bottom: 1px solid var(--rule); }
@@ -415,10 +449,10 @@ body {
 /* ── Reveal ──────────────────────────────────────────────────────────────── */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(56px);
   transition:
-    opacity   0.72s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity   1s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .reveal.in { opacity: 1; transform: translateY(0); }
 
@@ -538,68 +572,46 @@ body {
 ::-webkit-scrollbar-thumb { background: oklch(75% 0.02 280); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: oklch(60% 0.04 280); }
 
-/* ── Ground strip (walker stage) ─────────────────────────────────────────── */
-.ground-strip {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  height: 84px;
-  z-index: 100;
-  pointer-events: none;
-}
-.ground-line {
-  position: absolute;
-  bottom: 54px; left: 0; right: 0;
-  height: 1px;
-  background: var(--rule-strong);
-  opacity: 0.35;
-}
-.walker-char {
-  position: absolute;
-  bottom: 54px;
-  transition: left 0.12s linear;
-  transform-origin: center bottom;
-}
-.walker-char svg {
-  display: block;
-}
+/* ── Custom cursor (hellomonday-style lerp ring) ─────────────────────────── */
+@media (pointer: fine) {
+  * { cursor: none !important; }
 
-/* Walker state animations */
-.walker-char[data-state="walking"] .walker-leg-l { animation: wlk-l 0.48s ease-in-out infinite; }
-.walker-char[data-state="walking"] .walker-leg-r { animation: wlk-r 0.48s ease-in-out infinite; }
-.walker-char[data-state="walking"] .walker-arm-l { animation: wlk-arm-l 0.48s ease-in-out infinite; }
-.walker-char[data-state="walking"] .walker-arm-r { animation: wlk-arm-r 0.48s ease-in-out infinite; }
+  .c-dot {
+    position: fixed;
+    top: 0; left: 0;
+    width: 6px; height: 6px;
+    margin: -3px 0 0 -3px;
+    background: var(--ink);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    will-change: transform;
+  }
 
-.walker-char[data-state="running"] .walker-leg-l { animation: run-l 0.24s ease-in-out infinite; }
-.walker-char[data-state="running"] .walker-leg-r { animation: run-r 0.24s ease-in-out infinite; }
-.walker-char[data-state="running"] .walker-arm-l { animation: run-arm-l 0.24s ease-in-out infinite; }
-.walker-char[data-state="running"] .walker-arm-r { animation: run-arm-r 0.24s ease-in-out infinite; }
+  .c-ring {
+    position: fixed;
+    top: 0; left: 0;
+    width: 38px; height: 38px;
+    margin: -19px 0 0 -19px;
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+    opacity: 0.38;
+    pointer-events: none;
+    z-index: 9998;
+    will-change: transform;
+    transition:
+      width  0.42s cubic-bezier(0.16, 1, 0.3, 1),
+      height 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+      margin-top  0.42s cubic-bezier(0.16, 1, 0.3, 1),
+      margin-left 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.42s ease;
+  }
 
-.walker-char[data-state="idle"] svg   { animation: w-breathe 2.4s ease-in-out infinite; transform-origin: center bottom; }
-.walker-char[data-state="waving"] .walker-arm-r { animation: w-wave 0.55s ease-in-out 3; }
-
-/* Walk keyframes */
-@keyframes wlk-l      { 0%,100% { transform: rotate(22deg); }  50% { transform: rotate(-22deg); } }
-@keyframes wlk-r      { 0%,100% { transform: rotate(-22deg); } 50% { transform: rotate(22deg); } }
-@keyframes wlk-arm-l  { 0%,100% { transform: rotate(-18deg); } 50% { transform: rotate(18deg); } }
-@keyframes wlk-arm-r  { 0%,100% { transform: rotate(18deg); }  50% { transform: rotate(-18deg); } }
-
-/* Run keyframes — wider swing */
-@keyframes run-l      { 0%,100% { transform: rotate(32deg); }  50% { transform: rotate(-32deg); } }
-@keyframes run-r      { 0%,100% { transform: rotate(-32deg); } 50% { transform: rotate(32deg); } }
-@keyframes run-arm-l  { 0%,100% { transform: rotate(-28deg); } 50% { transform: rotate(28deg); } }
-@keyframes run-arm-r  { 0%,100% { transform: rotate(28deg); }  50% { transform: rotate(-28deg); } }
-
-/* Idle breathe */
-@keyframes w-breathe  { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(0.96); } }
-
-/* Wave arm */
-@keyframes w-wave {
-  0%   { transform: rotate(0deg); }
-  20%  { transform: rotate(-65deg); }
-  45%  { transform: rotate(-45deg); }
-  65%  { transform: rotate(-65deg); }
-  85%  { transform: rotate(-45deg); }
-  100% { transform: rotate(0deg); }
+  .c-ring[data-hover] {
+    width: 66px; height: 66px;
+    margin: -33px 0 0 -33px;
+    opacity: 0.15;
+  }
 }
 
 /* ── Level load bar (section headings) ───────────────────────────────────── */

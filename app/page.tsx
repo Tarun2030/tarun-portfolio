@@ -1,8 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Walker from '@/components/Walker'
-
 // ─────────────────────────────────────────────────────────────────────────────
 // Components
 // ─────────────────────────────────────────────────────────────────────────────
@@ -186,7 +184,6 @@ export default function Home() {
     <>
       <div className="scroll-progress" aria-hidden />
       <Nav />
-      <Walker />
 
       <main className="main-wrap" style={{ paddingBottom: 100 }}>
 
@@ -216,14 +213,14 @@ export default function Home() {
           {/* Text */}
           <div className="hero-content">
             <Reveal>
-              <p className="t-label" style={{ marginBottom: 'var(--space-5)', color: 'var(--amber)' }}>
+              <p className="t-label" style={{ marginBottom: 'var(--space-5)', color: 'var(--text-muted)', letterSpacing: '0.12em' }}>
                 EA · Builder · Raipur, C.G.
               </p>
             </Reveal>
 
             <Reveal delay={60}>
               <div style={{ marginBottom: 'var(--space-6)' }}>
-                <h1 className="t-display" style={{ fontSize: 'clamp(80px, 12vw, 160px)', maxWidth: '13ch' }}>
+                <h1 className="t-display" style={{ fontSize: 'clamp(88px, 14vw, 200px)', maxWidth: '12ch', lineHeight: 0.86 }}>
                   I build what I wish existed.
                 </h1>
               </div>
@@ -283,10 +280,13 @@ export default function Home() {
                 <a href={p.href} className="project-card">
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
                     <div>
-                      <div className="t-heading" style={{ fontSize: 20, marginBottom: 3 }}>{p.name}</div>
+                      <div className="t-heading" style={{ fontSize: 21, marginBottom: 3 }}>{p.name}</div>
                       <div className="t-label" style={{ color: 'var(--text-muted)' }}>{p.year}</div>
                     </div>
-                    <span className={`badge badge-${p.status.toLowerCase()}`}>{p.status}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                      <span className="card-arrow t-body" style={{ fontSize: 18 }}>→</span>
+                      <span className={`badge badge-${p.status.toLowerCase()}`}>{p.status}</span>
+                    </div>
                   </div>
                   <p className="t-body" style={{ fontSize: 13, color: 'var(--text-mid)', flex: 1, marginBottom: 16 }}>{p.desc}</p>
                   <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
@@ -441,7 +441,7 @@ export default function Home() {
         <section id="contact" style={{ paddingBottom: 'var(--space-10)' }}>
           <hr className="rule" style={{ marginBottom: 'var(--space-8)' }} />
           <Reveal>
-            <h2 className="t-display" style={{ fontSize: 'clamp(56px, 9vw, 120px)', marginBottom: 'var(--space-6)', maxWidth: '10ch' }}>
+            <h2 className="t-display" style={{ fontSize: 'clamp(72px, 11vw, 160px)', marginBottom: 'var(--space-6)', maxWidth: '10ch', lineHeight: 0.87 }}>
               Let&apos;s work.
             </h2>
             <p className="t-body" style={{ fontSize: 16, color: 'var(--text-muted)', maxWidth: '42ch', marginBottom: 'var(--space-6)' }}>

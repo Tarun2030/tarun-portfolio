@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Darker_Grotesque, Literata, JetBrains_Mono } from 'next/font/google'
+import Cursor from '@/components/Cursor'
 import './globals.css'
 
 const darkerGrotesque = Darker_Grotesque({
@@ -33,7 +34,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={`scroll-smooth ${darkerGrotesque.variable} ${literata.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <Cursor />
+        {children}
+      </body>
     </html>
   )
 }
