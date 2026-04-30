@@ -14,17 +14,28 @@ export default function Cursor() {
     let hover = false
     let raf = 0
 
-    const move  = (e: MouseEvent) => { mx = e.clientX; my = e.clientY }
+    let visible = false
+    const move  = (e: MouseEvent) => {
+      mx = e.clientX; my = e.clientY
+      if (!visible) {
+        visible = true
+        rx = e.clientX; ry = e.clientY   // jump ring to mouse on first move
+        if (dot.current)  dot.current.style.opacity  = '1'
+        if (ring.current) ring.current.style.opacity = '1'
+      }
+    }
     const over  = (e: Event) => {
       hover = !!(e.target as Element).closest?.('a, button, [role="button"]')
-    }
-    const show  = () => {
-      if (dot.current)  dot.current.style.opacity  = '1'
-      if (ring.current) ring.current.style.opacity = '1'
     }
     const hide  = () => {
       if (dot.current)  dot.current.style.opacity  = '0'
       if (ring.current) ring.current.style.opacity = '0'
+    }
+    const show  = () => {
+      if (visible) {
+        if (dot.current)  dot.current.style.opacity  = '1'
+        if (ring.current) ring.current.style.opacity = '1'
+      }
     }
 
     const tick = () => {
