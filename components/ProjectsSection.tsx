@@ -9,20 +9,6 @@ const projects = [
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1400&q=85",
     href: "https://myrelay.space",
   },
-  {
-    name: "Portfolio OS",
-    description: "Where I document what I'm building and thinking. You're looking at it.",
-    // SWAP → screenshot of this portfolio
-    image: "https://images.unsplash.com/photo-1559136555-9303baea8eae?auto=format&fit=crop&w=1400&q=85",
-    href: "#",
-  },
-  {
-    name: "Audit Arsenal",
-    description: "A prompt kit for reviewing copy and UI the way an operator would — from the outside, looking for what breaks.",
-    // SWAP → screenshot of the prompt kit in action
-    image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1400&q=85",
-    href: "#",
-  },
 ];
 
 function ProjectItem({ project }: { project: (typeof projects)[0] }) {

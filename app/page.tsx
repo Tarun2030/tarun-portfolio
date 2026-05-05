@@ -3,7 +3,6 @@
 import Button from "@/components/Button";
 import TestimonialSection from "@/components/TestimonialSection";
 import PricingSection from "@/components/PricingSection";
-import TestimonialCarousel from "@/components/TestimonialCarousel";
 import ProjectsSection from "@/components/ProjectsSection";
 import FrenchSection from "@/components/FrenchSection";
 import PartnerSection from "@/components/PartnerSection";
@@ -131,10 +130,7 @@ export default function Home() {
       {/* ── 4. PRICING ───────────────────────────────────────────────────── */}
       <PricingSection />
 
-      {/* ── 5. TESTIMONIAL CAROUSEL ──────────────────────────────────────── */}
-      <TestimonialCarousel />
-
-      {/* ── 6. FRENCH ────────────────────────────────────────────────────── */}
+      {/* ── 5. FRENCH ────────────────────────────────────────────────────── */}
       <FrenchSection />
 
       {/* ── 7. PROJECTS ──────────────────────────────────────────────────── */}
