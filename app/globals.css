@@ -56,10 +56,10 @@ body {
   100% { transform: translateX(-50%); }
 }
 .animate-marquee {
-  animation: marquee 30s linear infinite;
+  animation: marquee 15s linear infinite;
 }
 @media (max-width: 768px) {
-  .animate-marquee { animation-duration: 10s; }
+  .animate-marquee { animation-duration: 8s; }
 }
 
 @keyframes floatFade {
