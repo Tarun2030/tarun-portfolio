@@ -8,7 +8,7 @@ export default function PricingSection() {
 
   return (
     <section ref={ref} className="w-full py-12 px-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:max-w-4xl md:ml-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:max-w-4xl mx-auto">
 
         {/* Dark card */}
         <div
