@@ -5,6 +5,7 @@ import TestimonialSection from "@/components/TestimonialSection";
 import PricingSection from "@/components/PricingSection";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
 import ProjectsSection from "@/components/ProjectsSection";
+import FrenchSection from "@/components/FrenchSection";
 import PartnerSection from "@/components/PartnerSection";
 import Footer from "@/components/Footer";
 import CopyrightBar from "@/components/CopyrightBar";
@@ -133,19 +134,22 @@ export default function Home() {
       {/* ── 5. TESTIMONIAL CAROUSEL ──────────────────────────────────────── */}
       <TestimonialCarousel />
 
-      {/* ── 6. PROJECTS ──────────────────────────────────────────────────── */}
+      {/* ── 6. FRENCH ────────────────────────────────────────────────────── */}
+      <FrenchSection />
+
+      {/* ── 7. PROJECTS ──────────────────────────────────────────────────── */}
       <ProjectsSection />
 
-      {/* ── 7. PARTNER ───────────────────────────────────────────────────── */}
+      {/* ── 8. PARTNER ───────────────────────────────────────────────────── */}
       <PartnerSection />
 
-      {/* ── 8. FOOTER ────────────────────────────────────────────────────── */}
+      {/* ── 9. FOOTER ────────────────────────────────────────────────────── */}
       <Footer />
 
-      {/* ── 9. COPYRIGHT BAR ─────────────────────────────────────────────── */}
+      {/* ── 10. COPYRIGHT BAR ────────────────────────────────────────────── */}
       <CopyrightBar />
 
-      {/* ── 10. FIXED BOTTOM NAV ─────────────────────────────────────────── */}
+      {/* ── 11. FIXED BOTTOM NAV ─────────────────────────────────────────── */}
       <BottomNav />
 
       {/* Spacer so bottom nav doesn't overlap content */}
