@@ -11,15 +11,18 @@ import CopyrightBar from "@/components/CopyrightBar";
 import BottomNav from "@/components/BottomNav";
 
 // ── Marquee images ─────────────────────────────────────────────────────────
+// RELAY SLOTS (A): swap these 3 with real screen recordings from myrelay.space
+// when ready — use Kap (Mac) or LICEcap to export as .gif, drop in /public/
 const MARQUEE_IMAGES = [
-  "https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif",
-  "https://motionsites.ai/assets/hero-portfolio-cosmic-preview-BpvWJ3Nc.gif",
-  "https://motionsites.ai/assets/hero-velorah-preview-CJNTtbpd.gif",
-  "https://motionsites.ai/assets/hero-asme-preview-B_nGDnTP.gif",
-  "https://motionsites.ai/assets/hero-transform-data-preview-Cx5OU29N.gif",
-  "https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif",
-  "https://motionsites.ai/assets/hero-orbit-web3-preview-BXt4OttD.gif",
-  "https://motionsites.ai/assets/hero-nexora-preview-cx5HmUgo.gif",
+  "https://images.unsplash.com/photo-1461749280684-ddd244803543?auto=format&fit=crop&w=1200&q=80", // → relay: dashboard view
+  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80", // → relay: link share flow
+  "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=1200&q=80", // → relay: mobile view
+  // ATMOSPHERIC (D): EA / ops / builder context — keep these
+  "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80", // executive desk
+  "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80", // travel — Germany/Agritechnica angle
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80", // analytics / ops
+  "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80", // modern office
+  "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=1200&q=80", // planning / notebook
 ];
 // Duplicate for seamless loop
 const MARQUEE_DOUBLED = [...MARQUEE_IMAGES, ...MARQUEE_IMAGES];

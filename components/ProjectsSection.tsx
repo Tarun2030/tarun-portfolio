@@ -5,17 +5,23 @@ const projects = [
   {
     name: "Relay",
     description: "An EA tool I built for myself first — handoffs, reminders, follow-through for everything that falls between other tools. Live at myrelay.space",
-    image: "https://motionsites.ai/assets/hero-evr-ventures-preview-DZxeVFEX.gif",
+    // SWAP → screenshot or screen recording of myrelay.space
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1400&q=85",
+    href: "https://myrelay.space",
   },
   {
     name: "Portfolio OS",
     description: "Where I document what I'm building and thinking. You're looking at it.",
-    image: "https://motionsites.ai/assets/hero-automation-machines-preview-DlTveRIN.gif",
+    // SWAP → screenshot of this portfolio
+    image: "https://images.unsplash.com/photo-1559136555-9303baea8eae?auto=format&fit=crop&w=1400&q=85",
+    href: "#",
   },
   {
     name: "Audit Arsenal",
     description: "A prompt kit for reviewing copy and UI the way an operator would — from the outside, looking for what breaks.",
-    image: "https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif",
+    // SWAP → screenshot of the prompt kit in action
+    image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1400&q=85",
+    href: "#",
   },
 ];
 
@@ -49,9 +55,14 @@ function ProjectItem({ project }: { project: (typeof projects)[0] }) {
       }}
     >
       <div className="ml-20 md:ml-28 mb-4">
-        <h3 className="font-mondwest text-2xl md:text-3xl font-semibold text-[#051A24] mb-1">
-          {project.name}
-        </h3>
+        <a
+          href={project.href}
+          target={project.href.startsWith("http") ? "_blank" : undefined}
+          rel={project.href.startsWith("http") ? "noreferrer" : undefined}
+          className="font-mondwest text-2xl md:text-3xl font-semibold text-[#051A24] mb-1 hover:opacity-70 transition inline-block"
+        >
+          {project.name} ↗
+        </a>
         <p className="text-sm md:text-base text-[#051A24]/70">{project.description}</p>
       </div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
