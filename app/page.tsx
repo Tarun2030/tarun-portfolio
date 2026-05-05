@@ -1,454 +1,150 @@
-'use client'
+"use client";
 
-import { useEffect, useRef, useState } from 'react'
-import ProjectCard from '@/components/ProjectCard'
-import TransitionLink from '@/components/TransitionLink'
-// ─────────────────────────────────────────────────────────────────────────────
-// Components
-// ─────────────────────────────────────────────────────────────────────────────
+import Button from "@/components/Button";
+import TestimonialSection from "@/components/TestimonialSection";
+import PricingSection from "@/components/PricingSection";
+import TestimonialCarousel from "@/components/TestimonialCarousel";
+import ProjectsSection from "@/components/ProjectsSection";
+import PartnerSection from "@/components/PartnerSection";
+import Footer from "@/components/Footer";
+import CopyrightBar from "@/components/CopyrightBar";
+import BottomNav from "@/components/BottomNav";
 
-function Reveal({ children, delay = 0, style = {} }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties }) {
-  const ref = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { el.classList.add('in'); obs.disconnect() } },
-      { threshold: 0.08 }
-    )
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
-  return <div ref={ref} className="reveal" style={{ transitionDelay: `${delay}ms`, ...style }}>{children}</div>
-}
+// ── Marquee images ─────────────────────────────────────────────────────────
+const MARQUEE_IMAGES = [
+  "https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif",
+  "https://motionsites.ai/assets/hero-portfolio-cosmic-preview-BpvWJ3Nc.gif",
+  "https://motionsites.ai/assets/hero-velorah-preview-CJNTtbpd.gif",
+  "https://motionsites.ai/assets/hero-asme-preview-B_nGDnTP.gif",
+  "https://motionsites.ai/assets/hero-transform-data-preview-Cx5OU29N.gif",
+  "https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif",
+  "https://motionsites.ai/assets/hero-orbit-web3-preview-BXt4OttD.gif",
+  "https://motionsites.ai/assets/hero-nexora-preview-cx5HmUgo.gif",
+];
+// Duplicate for seamless loop
+const MARQUEE_DOUBLED = [...MARQUEE_IMAGES, ...MARQUEE_IMAGES];
 
-// Count-up: animates from 0 to `to` when scrolled into view
-function CountUp({ to, suffix = '', prefix = '', duration = 1600 }: { to: number; suffix?: string; prefix?: string; duration?: number }) {
-  const [val, setVal] = useState(0)
-  const ref = useRef<HTMLSpanElement>(null)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obs = new IntersectionObserver(([e]) => {
-      if (!e.isIntersecting) return
-      obs.disconnect()
-      const start = performance.now()
-      const tick = (now: number) => {
-        const p = Math.min((now - start) / duration, 1)
-        const ease = 1 - Math.pow(1 - p, 4)
-        setVal(Math.round(ease * to))
-        if (p < 1) requestAnimationFrame(tick)
-      }
-      requestAnimationFrame(tick)
-    }, { threshold: 0.5 })
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [to, duration])
-  return <span ref={ref}>{prefix}{val}{suffix}</span>
-}
-
-// Section heading — Darker Grotesque 900, with amber level-load bar on entry
-function SectionHeading({ children, id }: { children: React.ReactNode; id?: string }) {
-  const ref    = useRef<HTMLDivElement>(null)
-  const barRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const el  = ref.current
-    const bar = barRef.current
-    if (!el || !bar) return
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          el.classList.add('in')
-          bar.classList.add('loaded')
-          obs.disconnect()
-        }
-      },
-      { threshold: 0.1 }
-    )
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
-
-  return (
-    <div ref={ref} className="reveal" style={{ position: 'relative', paddingBottom: 8, marginBottom: 'var(--space-6)' }}>
-      <h2 id={id} className="t-heading" style={{ fontSize: 'clamp(28px,4vw,42px)' }}>
-        {children}
-      </h2>
-      <div ref={barRef} className="level-load-bar" />
-    </div>
-  )
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Data
-// ─────────────────────────────────────────────────────────────────────────────
-
-const STATS = [
-  { value: 4,  suffix: ' yrs', label: 'as executive assistant' },
-  { value: 3,  suffix: '',     label: 'tools shipped' },
-  { value: 2,  suffix: '',     label: 'companies run ops for' },
-  { value: 100, suffix: '%',   label: 'built from real friction' },
-]
-
-const PROCESS = [
-  {
-    n: '01',
-    title: 'Find the friction',
-    body: "I run operations for a living. Every week I hit something broken — a handoff that slips, a follow-up that dies, a decision that can't be traced. I don't log it. I build around it.",
-  },
-  {
-    n: '02',
-    title: 'Build the smallest useful thing',
-    body: "No roadmap. No user stories. Start with what I'd actually use tomorrow. Relay started as a single follow-up tracker. It became a tool because I used it every day and kept adding what I needed.",
-  },
-  {
-    n: '03',
-    title: 'Ship it and work with it',
-    body: "I don't build for hypothetical users. I build for me. When it's live and I'm using it at work — that's when the real design work starts. The gap between v1 and useful is just usage.",
-  },
-]
-
-const PROJECTS = [
-  {
-    name: 'Relay',
-    year: '2026',
-    status: 'LIVE' as const,
-    desc: "An EA tool I built for myself first. Live at myrelay.space — handoffs, reminders, follow-through for everything that falls between other tools.",
-    stack: ['Next.js', 'Supabase', 'Vercel'],
-    href: 'https://myrelay.space',
-  },
-  {
-    name: 'Portfolio OS',
-    year: '2026',
-    status: 'LIVE' as const,
-    desc: "Where I document what I'm building and thinking. You're looking at it.",
-    stack: ['TypeScript', 'Tailwind', 'Notion'],
-    href: '#',
-  },
-  {
-    name: 'Audit Arsenal',
-    year: '2025',
-    status: 'LIVE' as const,
-    desc: "A prompt kit for reviewing copy and UI the way an operator would — from the outside, looking for what breaks.",
-    stack: ['Claude API', 'n8n', 'Linear'],
-    href: '#',
-  },
-]
-
-const POSTS = [
-  {
-    date: "Apr '26",
-    cat: 'Process',
-    title: 'How I open an AI build session without losing the plot',
-    excerpt: 'A compact ritual for turning messy intent into a clear first commit — constraints visible from the start.',
-    href: '#',
-  },
-  {
-    date: "Mar '26",
-    cat: 'Ops',
-    title: 'Executive support is product thinking in a quieter room',
-    excerpt: 'On prioritisation, sharp communication, and why good assistants think in systems before software.',
-    href: '#',
-  },
-]
-
-const HARD_SKILLS = ['Next.js', 'TypeScript', 'Supabase', 'Tailwind CSS', 'Vercel', 'Claude API', 'n8n']
-const SOFT_SKILLS = ['Executive Support', 'Ops Design', 'Stakeholder Management', 'Process Systems', 'Cross-functional Coordination']
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Nav
-// ─────────────────────────────────────────────────────────────────────────────
-
-function Nav() {
-  return (
-    <nav className="nav-bar">
-      <a href="#hero" className="nav-mark">TS</a>
-      <div className="nav-links-wrap">
-        {['Work', 'Writing', 'About'].map(l => (
-          <a key={l} href={`#${l.toLowerCase()}`} className="nav-link">
-            <span className="nav-dot" aria-hidden />
-            {l}
-          </a>
-        ))}
-        <a href="#contact" className="nav-link nav-cta">Get in touch</a>
-      </div>
-    </nav>
-  )
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Page
-// ─────────────────────────────────────────────────────────────────────────────
-
+// ── Page ───────────────────────────────────────────────────────────────────
 export default function Home() {
   return (
     <>
       <div className="scroll-progress" aria-hidden />
-      <Nav />
 
-      <main className="main-wrap" style={{ paddingBottom: 100 }}>
+      {/* ── 1. HERO ──────────────────────────────────────────────────────── */}
+      <section className="flex flex-col items-center px-6 pt-12 md:pt-16 pb-0">
+        <div className="w-full max-w-[440px]">
 
-        {/* ── Hero ─────────────────────────────────────────────────────────── */}
-        <section id="hero" style={{ paddingTop: 'calc(var(--space-10) + 48px)', paddingBottom: '128px', position: 'relative' }}>
+          {/* Logo */}
+          <h1
+            className="font-mondwest text-[32px] md:text-[40px] lg:text-[44px] font-semibold text-[#051A24] tracking-tight mb-4 animate-fade-in-up"
+            style={{ animationDelay: "0.1s" }}
+          >
+            Tarun Sharma
+          </h1>
 
-          {/* Photo */}
-          <div className="hero-photo" style={{
-            position: 'absolute', top: 'calc(var(--space-10) + 20px)', right: '-40px',
-            width: 'clamp(240px, 36vw, 420px)', height: 'clamp(300px, 48vw, 560px)',
-            pointerEvents: 'none', zIndex: 0,
-          }}>
-            <img src="/tarun.jpg" alt="" style={{
-              width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block',
-              filter: 'grayscale(12%) contrast(1.04) brightness(1.0)',
-              maskImage: 'linear-gradient(to left, transparent 0%, black 35%), linear-gradient(to top, transparent 0%, black 28%)',
-              WebkitMaskImage: 'linear-gradient(to left, transparent 0%, black 35%), linear-gradient(to top, transparent 0%, black 28%)',
-              maskComposite: 'intersect', WebkitMaskComposite: 'source-in',
-            }} />
+          {/* Tagline */}
+          <p
+            className="font-mono text-xs md:text-sm text-[#051A24] mb-2 animate-fade-in-up"
+            style={{ animationDelay: "0.2s" }}
+          >
+            The portfolio of Tarun Sharma
+          </p>
+
+          {/* Main heading */}
+          <div
+            className="animate-fade-in-up"
+            style={{ animationDelay: "0.3s" }}
+          >
+            <p
+              className="text-[32px] md:text-[40px] lg:text-[44px] leading-[1.1] text-[#0D212C] tracking-tight whitespace-nowrap"
+            >
+              Build the{" "}
+              <span className="font-mondwest">next wave,</span>
+            </p>
+            <p
+              className="text-[32px] md:text-[40px] lg:text-[44px] leading-[1.1] text-[#0D212C] tracking-tight whitespace-nowrap"
+            >
+              the <span className="font-mondwest">bold way.</span>
+            </p>
           </div>
 
-          {/* Floating brand mark */}
-          <div className="brand-mark" aria-hidden>
-            <span className="t-display" style={{ fontSize: 'clamp(120px, 20vw, 280px)' }}>TS</span>
+          {/* Description */}
+          <div
+            className="flex flex-col gap-6 text-sm md:text-base text-[#051A24] leading-relaxed mt-5 md:mt-6 animate-fade-in-up"
+            style={{ animationDelay: "0.4s" }}
+          >
+            <p>
+              I spent four years as an Executive Assistant at a manufacturing company in Raipur,
+              building systems and closing gaps that no one else noticed. I now build the tools I
+              always needed but couldn&apos;t find — starting with Relay.
+            </p>
+            <p>
+              The work is deliberate and lean. Every project gets my full attention — from the
+              first commit to the final deploy, without cutting corners.
+            </p>
+            <p>Engagements start at $5,000 per month.</p>
           </div>
 
-          {/* Text */}
-          <div className="hero-content">
-            <Reveal>
-              <p className="t-label" style={{ marginBottom: 'var(--space-5)', color: 'var(--text-muted)', letterSpacing: '0.12em' }}>
-                EA · Builder · Raipur, C.G.
-              </p>
-            </Reveal>
-
-            <Reveal delay={60}>
-              <div style={{ marginBottom: 'var(--space-6)' }}>
-                <h1 className="t-display" style={{ fontSize: 'clamp(88px, 14vw, 200px)', maxWidth: '12ch', lineHeight: 0.86 }}>
-                  I build what I wish existed.
-                </h1>
-              </div>
-            </Reveal>
-
-            <Reveal delay={130}>
-              <p className="t-body" style={{ fontSize: 18, color: 'var(--text-mid)', maxWidth: '42ch', marginBottom: 'var(--space-6)' }}>
-                EA by day, builder by night. I run operations at a manufacturing company in Raipur — and I ship tools that fix the gaps I find at work.
-              </p>
-            </Reveal>
-
-            <Reveal delay={180}>
-              <div style={{ display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap', marginBottom: 'var(--space-8)' }}>
-                <a href="#work" className="btn-primary">See the work</a>
-                <a href="#writing" className="btn-ghost">Read the writing →</a>
-              </div>
-            </Reveal>
-
-            {/* Now strip */}
-            <Reveal delay={230}>
-              <div className="now-strip">
-                <span className="now-dot" />
-                <span className="t-label" style={{ color: 'var(--text-muted)' }}>Now</span>
-                <span className="t-body" style={{ fontStyle: 'italic', fontSize: 13, color: 'var(--text-mid)' }}>
-                  Building Relay — Live at myrelay.space · Raipur → wherever the work is
-                </span>
-              </div>
-            </Reveal>
-          </div>
-        </section>
-
-        {/* ── Stats ────────────────────────────────────────────────────────── */}
-        <section style={{ paddingBottom: '128px' }}>
-          <div className="stats-grid">
-            {STATS.map((s, i) => (
-              <Reveal key={s.label} delay={i * 80}>
-                <div className="stat-block">
-                  <div className="t-display stat-num">
-                    <CountUp to={s.value} suffix={s.suffix} duration={1800} />
-                  </div>
-                  <div className="t-label stat-label">{s.label}</div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </section>
-
-        {/* ── Work ─────────────────────────────────────────────────────────── */}
-        <section id="work" style={{ paddingBottom: '128px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-6)' }}>
-            <SectionHeading>Work</SectionHeading>
+          {/* CTAs */}
+          <div
+            className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-5 md:mt-6 animate-fade-in-up"
+            style={{ animationDelay: "0.5s" }}
+          >
+            <Button variant="primary" href="mailto:mail2tarun.30@gmail.com">
+              Start a chat
+            </Button>
+            <Button variant="secondary" href="#work">
+              View projects
+            </Button>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {PROJECTS.map((p, i) => (
-              <Reveal key={p.name} delay={i * 80}>
-                <ProjectCard p={p} />
-              </Reveal>
-            ))}
-          </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ── How I work ───────────────────────────────────────────────────── */}
-        <section id="process" style={{ paddingBottom: '128px' }}>
-          <SectionHeading>How I work</SectionHeading>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-            {PROCESS.map((step, i) => (
-              <Reveal key={step.n} delay={i * 100}>
-                <div className="process-step">
-                  <div className="process-n t-label">{step.n}</div>
-                  <div className="process-body">
-                    <h3 className="t-heading process-title">{step.title}</h3>
-                    <p className="t-body process-text">{step.body}</p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </section>
-
-        {/* ── Writing ──────────────────────────────────────────────────────── */}
-        <section id="writing" style={{ paddingBottom: '128px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-6)' }}>
-            <SectionHeading>Writing</SectionHeading>
-            <a href="#" className="t-label rest-dim" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>All posts →</a>
-          </div>
-
-          {POSTS.map((post, i) => (
-            <Reveal key={post.title} delay={i * 70}>
-              <a href={post.href} className="post-row">
-                <div>
-                  <div className="t-label" style={{ color: 'var(--text-muted)', marginBottom: 4 }}>{post.date}</div>
-                  <span className="t-label" style={{ color: 'var(--accent)', border: '1px solid var(--accent-border)', background: 'var(--accent-dim)', padding: '2px 7px', borderRadius: 4 }}>{post.cat}</span>
-                </div>
-                <div>
-                  <div className="t-heading" style={{ fontSize: 17, marginBottom: 5 }}>{post.title}</div>
-                  <div className="t-body" style={{ fontSize: 13, color: 'var(--text-muted)', maxWidth: '52ch' }}>{post.excerpt}</div>
-                </div>
-                <span className="t-body" style={{ fontSize: 18, color: 'var(--text-muted)' }}>→</span>
-              </a>
-            </Reveal>
+      {/* ── 2. MARQUEE ────────────────────────────────────────────────────── */}
+      <div className="w-full mt-16 md:mt-20 mb-16 overflow-hidden">
+        <div
+          className="animate-marquee flex"
+          style={{ width: "max-content" }}
+        >
+          {MARQUEE_DOUBLED.map((src, i) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={i}
+              src={src}
+              alt=""
+              className="h-[280px] md:h-[500px] object-cover mx-3 rounded-2xl shadow-lg flex-shrink-0"
+            />
           ))}
-        </section>
+        </div>
+      </div>
 
-        {/* ── Experience ───────────────────────────────────────────────────── */}
-        <section id="experience" style={{ paddingBottom: '128px' }}>
-          <SectionHeading>Experience</SectionHeading>
-          <div className="exp-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14, alignItems: 'stretch' }}>
-            {[
-              { role: 'Executive Assistant', org: 'Shivalik Engineering Industries Ltd', period: '2024 – Present', note: 'Manufacturing & export. Calendar, execution, nothing slips.' },
-              { role: 'Operations Head', org: 'Inseive Overseas', period: '2022 – 2024', note: 'Freelance. Built the ops layer from scratch — process, vendor, team.' },
-            ].map((e, i) => (
-              <Reveal key={e.org} delay={i * 70} style={{ display: 'flex' }}>
-                <div className="project-card" style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-                  <div className="t-label" style={{ color: 'var(--text-muted)' }}>{e.period}</div>
-                  <div className="t-heading" style={{ fontSize: 18, lineHeight: 1.15 }}>{e.role}</div>
-                  <div className="t-body" style={{ fontSize: 13, color: 'var(--accent)' }}>{e.org}</div>
-                  <p className="t-body" style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 'auto' }}>{e.note}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </section>
+      {/* ── 3. TESTIMONIAL QUOTE ─────────────────────────────────────────── */}
+      <TestimonialSection />
 
-        {/* ── About ────────────────────────────────────────────────────────── */}
-        <section id="about" style={{ paddingBottom: '128px' }}>
-          <SectionHeading>About</SectionHeading>
+      {/* ── 4. PRICING ───────────────────────────────────────────────────── */}
+      <PricingSection />
 
-          <div className="about-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 180px', gap: 'var(--space-7)', alignItems: 'start' }}>
-            <Reveal>
-              <p className="t-body" style={{ fontSize: 16, color: 'var(--text-mid)', marginBottom: 'var(--space-4)', maxWidth: '50ch' }}>
-                I&apos;m an EA at a manufacturing and export company in Raipur. The job is precise by necessity — if something&apos;s unclear, it costs someone time or money. Four years of that teaches you to think in systems before you reach for tools.
-              </p>
-              <p className="t-body" style={{ fontSize: 16, color: 'var(--text-muted)', maxWidth: '50ch' }}>
-                I&apos;m not a trained engineer. I build what I need and learn what I don&apos;t know. Mostly at night. Mostly alone. Everything here started as a real problem I ran into at work.
-              </p>
-            </Reveal>
-            <Reveal delay={80}>
-              <div className="sidebar-card about-sidebar">
-                {[
-                  ['Role',  'EA + Solo Builder'],
-                  ['Stack', 'Next.js / Supabase'],
-                  ['Based', 'Raipur, C.G.'],
-                ].map(([k, v], i, arr) => (
-                  <div key={k} style={{ paddingBottom: i < arr.length - 1 ? 'var(--space-3)' : 0, marginBottom: i < arr.length - 1 ? 'var(--space-3)' : 0, borderBottom: i < arr.length - 1 ? '1px solid var(--glass-border)' : 'none' }}>
-                    <div className="t-label" style={{ color: 'var(--text-muted)', marginBottom: 3 }}>{k}</div>
-                    <div className="t-heading" style={{ fontSize: 13 }}>{v}</div>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-          </div>
+      {/* ── 5. TESTIMONIAL CAROUSEL ──────────────────────────────────────── */}
+      <TestimonialCarousel />
 
-          <Reveal delay={100} style={{ marginTop: 'var(--space-6)' }}>
-            <div className="cap-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
-              {[
-                { label: 'Operations', body: "Making things run smoothly for people who can't afford rough edges. That's the whole job." },
-                { label: 'Building',   body: 'Small, useful software built from real operational friction — not hypothetical user stories.' },
-                { label: 'Systems',    body: 'Thinking in checklists and repeatable flows before reaching for code. That order matters.' },
-              ].map(c => (
-                <div key={c.label} className="cap-col">
-                  <div className="t-label" style={{ color: 'var(--accent)', marginBottom: 10 }}>{c.label}</div>
-                  <p className="t-body" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{c.body}</p>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </section>
+      {/* ── 6. PROJECTS ──────────────────────────────────────────────────── */}
+      <ProjectsSection />
 
-        {/* ── Tools ────────────────────────────────────────────────────────── */}
-        <section id="tools" style={{ paddingBottom: '128px' }}>
-          <SectionHeading>Tools</SectionHeading>
-          <Reveal delay={60}>
-            <div style={{ marginBottom: 16 }}>
-              <div className="t-label" style={{ color: 'var(--text-muted)', marginBottom: 12 }}>Hard Skills</div>
-              <div className="marquee-overflow">
-                <div className="marquee-track">
-                  {[...HARD_SKILLS, ...HARD_SKILLS].map((t, i) => (
-                    <span key={i} className="tool-pill" style={{ marginRight: 8, flexShrink: 0 }}>{t}</span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </Reveal>
-          <Reveal delay={120}>
-            <div>
-              <div className="t-label" style={{ color: 'var(--text-muted)', marginBottom: 12 }}>Soft Skills</div>
-              <div className="marquee-overflow">
-                <div className="marquee-track-rev">
-                  {[...SOFT_SKILLS, ...SOFT_SKILLS].map((t, i) => (
-                    <span key={i} className="tool-pill" style={{ marginRight: 8, flexShrink: 0 }}>{t}</span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        </section>
+      {/* ── 7. PARTNER ───────────────────────────────────────────────────── */}
+      <PartnerSection />
 
-        {/* ── Contact ──────────────────────────────────────────────────────── */}
-        <section id="contact" style={{ paddingBottom: 'var(--space-10)' }}>
-          <hr className="rule" style={{ marginBottom: 'var(--space-8)' }} />
-          <Reveal>
-            <h2 className="t-display" style={{ fontSize: 'clamp(72px, 11vw, 160px)', marginBottom: 'var(--space-6)', maxWidth: '10ch', lineHeight: 0.87 }}>
-              Let&apos;s work.
-            </h2>
-            <p className="t-body" style={{ fontSize: 16, color: 'var(--text-muted)', maxWidth: '42ch', marginBottom: 'var(--space-6)' }}>
-              If you need someone who can run your operations <em>and</em> think about your next tool — or if you just want to talk about what you&apos;re building — I&apos;m easy to reach.
-            </p>
-            <a href="mailto:mail2tarun.30@gmail.com" className="t-heading rest-dim"
-              style={{ fontSize: 22, color: 'var(--ink)', textDecoration: 'none', display: 'inline-block', marginBottom: 'var(--space-7)' }}
-            >mail2tarun.30@gmail.com</a>
-            <div style={{ display: 'flex', gap: 'var(--space-6)', marginBottom: 'var(--space-8)' }}>
-              {[{ label: 'X / Twitter', href: 'https://x.com/' }, { label: 'GitHub', href: 'https://github.com/Tarun2030' }, { label: 'LinkedIn', href: 'https://linkedin.com/in/' }].map(s => (
-                <a key={s.label} href={s.href} className="t-label rest-dim"
-                  style={{ color: 'var(--ink)', textDecoration: 'none' }}
-                >{s.label}</a>
-              ))}
-            </div>
-            <p className="t-label" style={{ color: 'var(--text-muted)', opacity: 0.45 }}>
-              Built by me · Next.js · Vercel · 2026
-            </p>
-          </Reveal>
-        </section>
+      {/* ── 8. FOOTER ────────────────────────────────────────────────────── */}
+      <Footer />
 
-      </main>
+      {/* ── 9. COPYRIGHT BAR ─────────────────────────────────────────────── */}
+      <CopyrightBar />
+
+      {/* ── 10. FIXED BOTTOM NAV ─────────────────────────────────────────── */}
+      <BottomNav />
+
+      {/* Spacer so bottom nav doesn't overlap content */}
+      <div className="h-24" />
     </>
-  )
+  );
 }

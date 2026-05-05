@@ -1,26 +1,13 @@
 import type { Metadata } from 'next'
-import { Darker_Grotesque, Literata, JetBrains_Mono } from 'next/font/google'
+import { Playfair_Display } from 'next/font/google'
 import Cursor from '@/components/Cursor'
-import PageTransition from '@/components/PageTransition'
 import './globals.css'
 
-const darkerGrotesque = Darker_Grotesque({
+const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
-  variable: '--font-display',
-})
-
-const literata = Literata({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  style: ['normal', 'italic'],
-  variable: '--font-body',
-})
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-mono',
+  weight: ['400', '600'],
+  variable: '--font-mondwest-fallback',
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
@@ -31,13 +18,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`scroll-smooth ${darkerGrotesque.variable} ${literata.variable} ${jetbrainsMono.variable}`}
-    >
+    <html lang="en" className={playfairDisplay.variable}>
       <body className="antialiased">
         <Cursor />
-        <PageTransition />
         {children}
       </body>
     </html>
