@@ -41,7 +41,7 @@ export default function Footer() {
                 GitHub
               </a>
               <a
-                href="https://linkedin.com/in/"
+                href="https://www.linkedin.com/in/tarun-sharma-ea"
                 target="_blank"
                 rel="noreferrer"
                 className="text-base text-[#051A24] hover:opacity-70 transition"

@@ -35,9 +35,8 @@ export default function TestimonialSection() {
           className={`text-[32px] md:text-[40px] lg:text-[44px] leading-[1.1] text-[#0D212C] tracking-tight mb-4 ${fadeClass}`}
           style={isInView ? { animationDelay: "0.2s" } : {}}
         >
-          I left EA work to build the{" "}
-          <span className="font-mondwest">products</span>{" "}
-          I always wanted
+          I&apos;m an EA who ended up{" "}
+          <span className="font-mondwest">building his own tools</span>
         </h2>
 
         <p
@@ -52,9 +51,9 @@ export default function TestimonialSection() {
           style={isInView ? { animationDelay: "0.4s" } : {}}
         >
           {[
-            { label: "EA", w: 80 },
-            { label: "Ops", w: 83 },
-            { label: "Builder", w: 110 },
+            { label: "Shivalik", w: 100 },
+            { label: "Germany '25", w: 110 },
+            { label: "Relay", w: 80 },
           ].map((c) => (
             <span
               key={c.label}

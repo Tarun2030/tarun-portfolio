@@ -4,17 +4,17 @@ import { useEffect, useRef, useState } from "react";
 const projects = [
   {
     name: "Relay",
-    description: "From zero to a live async handoff tool — built for real ops friction at myrelay.space",
+    description: "An EA tool I built for myself first — handoffs, reminders, follow-through for everything that falls between other tools. Live at myrelay.space",
     image: "https://motionsites.ai/assets/hero-evr-ventures-preview-DZxeVFEX.gif",
   },
   {
     name: "Portfolio OS",
-    description: "A modular system for builders to showcase work without the usual bloat",
+    description: "Where I document what I'm building and thinking. You're looking at it.",
     image: "https://motionsites.ai/assets/hero-automation-machines-preview-DlTveRIN.gif",
   },
   {
     name: "Audit Arsenal",
-    description: "A prompt kit for reviewing copy and UI the way an operator would — from the outside in",
+    description: "A prompt kit for reviewing copy and UI the way an operator would — from the outside, looking for what breaks.",
     image: "https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif",
   },
 ];

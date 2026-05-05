@@ -47,7 +47,7 @@ export default function Home() {
             className="font-mono text-xs md:text-sm text-[#051A24] mb-2 animate-fade-in-up"
             style={{ animationDelay: "0.2s" }}
           >
-            The portfolio of Tarun Sharma
+            EA · Builder · Raipur, India
           </p>
 
           {/* Main heading */}
@@ -74,13 +74,15 @@ export default function Home() {
             style={{ animationDelay: "0.4s" }}
           >
             <p>
-              I spent four years as an Executive Assistant at a manufacturing company in Raipur,
-              building systems and closing gaps that no one else noticed. I now build the tools I
-              always needed but couldn&apos;t find — starting with Relay.
+              I&apos;ve spent 4+ years inside executive operations — calendars, export logistics,
+              high-stakes travel, cross-border stakeholders. In 2025, I represented Shivalik at
+              Agritechnica in Germany, the world&apos;s largest agricultural trade fair. That work
+              taught me to think in systems before reaching for tools.
             </p>
             <p>
-              The work is deliberate and lean. Every project gets my full attention — from the
-              first commit to the final deploy, without cutting corners.
+              Somewhere in that, I noticed the tools EAs rely on are terrible. So I started
+              building Relay — alone, in Next.js, while working full-time. The gap between what I
+              needed and what existed bothered me enough to close it myself.
             </p>
             <p>Engagements start at $5,000 per month.</p>
           </div>
